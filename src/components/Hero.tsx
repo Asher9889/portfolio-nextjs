@@ -19,7 +19,7 @@ export default function Hero() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }, // elegant ease out
+      transition: { duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] as const },
     },
   };
 
@@ -68,7 +68,7 @@ export default function Hero() {
               />
             </svg>
             {/* Gradient underline */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-[2px] rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 opacity-80" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-0.5 rounded-full bg-linear-to-r from-blue-500 via-purple-500 to-orange-500 opacity-80" />
           </a>
         </motion.div>
 
@@ -98,7 +98,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-8 left-0 right-0 px-8 md:px-16 flex justify-between items-end w-full max-w-[1400px] mx-auto"
+        className="absolute bottom-8 left-0 right-0 px-8 md:px-16 flex justify-between items-end w-full max-w-350 mx-auto"
       >
         {/* Left: Location */}
         <div className="flex flex-col items-start gap-2">
