@@ -1,13 +1,50 @@
 "use client";
 
-import React, { useState } from "react";
-import { Sun, Command } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Sun, Moon, Command } from "lucide-react";
 import clsx from "clsx";
 import ShinyText from './ShinyText';
 import BookCallDialog from "./BookCallDialog";
 
+
+const THEME_KEY = "portfolio-theme";
+type Theme = "light" | "dark";
+
 export default function Navigation() {
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>("light");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme: Theme = savedTheme === "dark" || savedTheme === "light"
+      ? (savedTheme as Theme)
+      : prefersDark
+        ? "dark"
+        : "light";
+
+    document.documentElement.classList.toggle("dark", initialTheme === "dark");
+    document.documentElement.style.colorScheme = initialTheme;
+    setTheme(initialTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme: Theme = theme === "dark" ? "light" : "dark";
+    document.documentElement.classList.toggle("dark", nextTheme === "dark");
+    document.documentElement.style.colorScheme = nextTheme;
+    localStorage.setItem(THEME_KEY, nextTheme);
+    setTheme(nextTheme);
+  };
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const currentTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
+      setTheme(currentTheme);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   return (
     <>
@@ -67,8 +104,14 @@ export default function Navigation() {
           <div className="h-5 w-px bg-black/10 mx-2"></div>
 
           <div className="flex items-center gap-4 px-2">
-            <button className="w-10 h-10 flex items-center justify-center rounded-full border border-blue-500 text-blue-500 hover:bg-blue-50 transition-colors cursor-pointer">
-              <Sun size={18} />
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              aria-pressed={theme === "dark"}
+              className="w-10 h-10 flex items-center justify-center rounded-full border border-blue-500 text-blue-500 hover:bg-blue-50 transition-colors cursor-pointer dark:hover:bg-blue-500/10"
+            >
+              {theme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
             </button>
 
             <button
