@@ -1,387 +1,365 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
 
-type MediaTile = {
-  src: string;
-  alt: string;
-  label: string;
-  className: string;
-};
+import aiImage from "@/../public/ai-project.png";
 
-type Project = {
-  id: string;
-  index: string;
-  name: string;
-  category: string;
-  tagline: string;
-  summary: string;
-  url: string;
-  highlights: string[];
-  challenge: string;
-  approach: string;
-  outcome: string;
-  stack: string[];
-  media: MediaTile[];
-  theme: {
-    primary: string;
-    secondary: string;
-  };
-};
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiNodedotjs,
+  SiMongodb,
+  SiTensorflow,
+  SiOpencv,
+  SiTailwindcss,
+  SiRedis,
+  SiGraphql,
+  SiAlmalinux as SiAmazon,
+  SiYolo,
+  SiPython,
+  SiLivekit,
+} from "react-icons/si";
 
-type AccentStyle = Record<string, string>;
+import { FaReact } from "react-icons/fa";
+
+
+
+import { TbBrandFramerMotion } from "react-icons/tb";
+
+
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import Image, { StaticImageData } from "next/image";
+import { ArrowUpRight, Layers, ExternalLink } from "lucide-react";
+import Video from "./Video";
+
+interface Project {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  tags: { name: string; icon: React.ComponentType, color?: string }[];
+  image: string | StaticImageData;
+  color: string;
+  year: string;
+  link?: string;
+  video?: string;
+}
 
 const projects: Project[] = [
   {
-    id: "purecheckup",
-    index: "01",
-    name: "PureCheckup",
-    category: "Healthcare platform",
-    tagline: "Most healthcare websites confuse users when they need clarity the most.",
-    summary:
-      "Make booking a consultation feel as simple as ordering food. Reduced friction across the full flow, from selecting a service to confirming a slot.",
-    url: "https://purecheckup.com/",
-    highlights: ["Book in under 60 seconds", "Clear doctor availability", "50+ services simplified"],
-    challenge: "Users were dropping before booking. Too many steps, unclear structure, no urgency.",
-    approach:
-      "Reduced decisions per screen, grouped services clearly, and sharpened the visual hierarchy for trust.",
-    outcome:
-      "Users move from confusion to action faster. The flow feels predictable, which builds trust.",
-    stack: ["UX Architecture", "Trust-first Copy", "Booking Flow", "Responsive Design"],
-    media: [
-      {
-        src: "/purecheckup-homepage.png",
-        alt: "PureCheckup homepage",
-        label: "Hero",
-        className: "sm:col-span-2 h-60",
-      },
-      {
-        src: "/purecheckup-nocostemi.png",
-        alt: "PureCheckup trust section",
-        label: "Trust",
-        className: "h-48",
-      },
-      {
-        src: "/purecheckup-whychoose.png",
-        alt: "PureCheckup why choose section",
-        label: "Why choose",
-        className: "h-48",
-      },
+    id: 5,
+    title: "Face Vision",
+    subtitle: "AI-Powered Real-Time Face Recognition & Attendance Intelligence System",
+    description:
+      "Enterprise-grade AI surveillance and attendance platform for real-time face recognition, employee tracking, automated attendance, unknown visitor monitoring, and operational analytics across CCTV camera networks.",
+    // tags: ["React.js", "TanStack Query", "ShadCN UI", "TypeScript", "Node.js", "MongoDB", "OpenCV", "TensorFlow"],
+    tags: [
+      { name: "React", icon: FaReact, color: "#61DAFB" },
+      { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+      { name: "Python", icon: SiPython, color: "#3776AB" },
+      { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+      { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+      { name: "LiveKit", icon: SiLivekit, color: "#000" },
+      { name: "Redis", icon: SiRedis, color: "#FF4438" },
+      { name: "TensorFlow", icon: SiTensorflow, color: "#FF6F00" },
+      { name: "Yolo", icon: SiYolo, color: "#111F68" },
+      { name: "OpenCV", icon: SiOpencv, color: "#5C3EE8" },
+      { name: "Framer Motion", icon: TbBrandFramerMotion },
+      { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
     ],
-    theme: {
-      primary: "#6a7f68",
-      secondary: "#445a53",
-    },
+    image: aiImage, // Replace with your images
+    color: "#47A248",
+    video: "https://res.cloudinary.com/saurabhbackend/video/upload/vc_vp9/v1778603722/portfolio/ngnpj9mbgbxfzhtcv4zt.webm",
+    // video: "https://res.cloudinary.com/saurabhbackend/video/upload/sp_auto/v1778603722/portfolio/ngnpj9mbgbxfzhtcv4zt.m3u8",
+
+    year: "2026",
+    link: "#",
   },
   {
-    id: "startechnoplast",
-    index: "02",
-    name: "Star Technoplast",
-    category: "Manufacturing catalog",
-    tagline:
-      "Premium electrical and electronic accessories with a broad product catalog and bulk enquiry flow.",
-    summary:
-      "B2B catalogs usually feel like spreadsheets, hard to explore and harder to trust. For Star Technoplast, the goal was to help buyers understand products fast and move to enquiry without friction.",
-    url: "https://www.startechnoplast.com/",
-    highlights: [
-      "Product families structured for quick scanning",
-      "Direct bulk enquiry without unnecessary steps",
-      "Clear OEM / ODM pathways for serious buyers",
+    id: 2,
+    title: "Aether",
+    subtitle: "AI Design System",
+    description:
+      "Generative design tool that transforms natural language prompts into production-ready UI components. 50+ enterprise teams onboarded.",
+    tags: [
+     { name: "React", icon: FaReact, color: "#61DAFB" },
+      { name: "OpenAI", icon: SiTypescript, color: "#3178C6" },
+      { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
+      { name: "Framer Motion", icon: TbBrandFramerMotion },
     ],
-    challenge:
-      "Turn a wide product range into a clean buying story so visitors can scan categories, compare products, and enquire quickly.",
-    approach:
-      "Grouped products by use case, foregrounded quality signals, and kept the enquiry path visible without overwhelming the catalog.",
-    outcome:
-      "The experience feels like a confident manufacturing brand, not a crowded product wall.",
-    stack: ["Catalog taxonomy", "Lead routing", "Product storytelling", "Responsive gallery system"],
-    media: [
-      {
-        src: "https://www.startechnoplast.com/assets/startechnoPlastHeroImage-BNalmuO8.webp",
-        alt: "Star Technoplast hero visual",
-        label: "Catalog hero",
-        className: "sm:col-span-2 h-56 sm:h-72",
-      },
-      {
-        src: "https://www.startechnoplast.com/assets/power-bank-CP_xKxPp.webp",
-        alt: "Star Technoplast power bank product visual",
-        label: "Product family",
-        className: "h-48 sm:h-56",
-      },
-      {
-        src: "https://www.startechnoplast.com/assets/speakerBody-IkX7px_I.webp",
-        alt: "Star Technoplast speaker product visual",
-        label: "Category depth",
-        className: "h-48 sm:h-56",
-      },
-      {
-        src: "https://www.startechnoplast.com/assets/plugBody-CnZkEUBX.webp",
-        alt: "Star Technoplast plug body product visual",
-        label: "Manufacturing quality",
-        className: "sm:col-span-2 h-52 sm:h-60",
-      },
+    image: "https://plus.unsplash.com/premium_photo-1778134471869-54d3df1db7a3?q=80&w=1325&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    color: "#16213e",
+    year: "2025",
+    link: "#",
+  },
+  {
+    id: 3,
+    title: "Nova",
+    subtitle: "E-Commerce Platform",
+    description:
+      "Headless commerce solution with sub-100ms global latency. Handles 10M+ SKUs with intelligent inventory forecasting.",
+    tags: [
+      { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
+      { name: "GraphQL", icon: SiGraphql, color: "#E53544" },
+      { name: "Redis", icon: SiRedis, color: "#FF4438" },
+      { name: "AWS", icon: SiAmazon, color: "#232F3E" },
     ],
-    theme: {
-      primary: "#b68d5d",
-      secondary: "#4a2a3d",
-    },
+    image: "https://images.unsplash.com/photo-1778431193240-72e7d9c4cd38?q=80&w=1827&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    color: "#16213e",
+    year: "2025",
+    link: "#",
   },
 ];
 
-function hexToRgb(hex: string) {
-  const normalized = hex.replace("#", "").trim();
-  const expanded = normalized.length === 3
-    ? normalized
-        .split("")
-        .map((char) => char + char)
-        .join("")
-    : normalized;
-
-  const parsed = Number.parseInt(expanded, 16);
-
-  return {
-    r: (parsed >> 16) & 255,
-    g: (parsed >> 8) & 255,
-    b: parsed & 255,
-  };
-}
-
-function tint(color: string, alpha: number) {
-  const { r, g, b } = hexToRgb(color);
-  return `rgb(${r} ${g} ${b} / ${alpha})`;
-}
-
-function accentStyle(project: Project): AccentStyle {
-  const primary = hexToRgb(project.theme.primary);
-  const secondary = hexToRgb(project.theme.secondary);
-
-  return {
-    "--project-primary": `${primary.r} ${primary.g} ${primary.b}`,
-    "--project-secondary": `${secondary.r} ${secondary.g} ${secondary.b}`,
-  };
-}
-
-function CaseCard({
-  title,
-  body,
-  color,
-}: {
-  title: string;
-  body: string;
-  color: string;
-}) {
-  return (
-    <div
-      className="rounded-3xl border border-border bg-card p-5 shadow-sm"
-      style={{
-        background: `linear-gradient(180deg, ${tint(color, 0.08)}, color-mix(in oklab, var(--card) 92%, ${tint(color, 0.04)}))`,
-        borderColor: `color-mix(in oklab, ${color} 18%, var(--border))`,
-      }}
-    >
-      <div className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">{title}</div>
-      <p className="mt-3 whitespace-pre-line text-sm leading-6 text-foreground/78">{body}</p>
-    </div>
-  );
-}
-
-function MediaGrid({ project }: { project: Project }) {
-  const styles = accentStyle(project);
+// ─── Section Header ───
+function SectionHeader() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <div
-      className="overflow-hidden rounded-4xl border border-border bg-card p-4 shadow-sm"
-      style={{
-        ...styles,
-        background:
-          `linear-gradient(135deg, color-mix(in oklab, ${project.theme.primary} 12%, var(--background)), color-mix(in oklab, ${project.theme.secondary} 10%, var(--background)))`,
-      }}
-    >
-      <div className="grid gap-3 sm:grid-cols-2">
-        {project.media.map((tile, index) => (
-          <figure
-            key={`${project.id}-${tile.label}`}
-            className={`group relative overflow-hidden rounded-[1.15rem] border border-border/60 bg-background/60 ${tile.className}`}
+    <div ref={ref} className="mb-24 px-6 md:px-12 lg:px-24">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8, ease: [0.17, 0.55, 0.55, 1] }}
+        className="flex items-end justify-between border-b border-neutral-200 pb-8"
+      >
+        <div>
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.2 }}
+            className="mb-4 block font-mono text-xs uppercase tracking-[0.2em] text-green-500"
           >
-            <img
-              src={tile.src}
-              alt={tile.alt}
-              loading="lazy"
-              className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.015]"
-            />
-            <div
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(16,16,16,0.42),rgba(16,16,16,0.02)_60%)]"
-              aria-hidden="true"
-            />
-            <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 p-4 text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-50/90">
-              <span>{tile.label}</span>
-              <span className="text-zinc-50/55">0{index + 1}</span>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+            Selected Work
+          </motion.span>
+          <h2 className="text-5xl font-bold tracking-tight text-neutral-900 md:text-7xl lg:text-8xl">
+            Projects
+          </h2>
+        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ delay: 0.4 }}
+          className="hidden md:flex items-center gap-2 text-sm text-neutral-500"
+        >
+          <Layers className="h-4 w-4" />
+          <span className="font-mono">{String(projects.length).padStart(2, "0")} Projects</span>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
 
-export default function ProjectShowcase() {
-  const [active, setActive] = useState(projects[0].id);
+// ─── Project Card ───
+function ProjectCard({ project, index, progress, range }: {
+  project: Project;
+  index: number;
+  progress: any;
+  range: [number, number];
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-20%" });
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Scale down as user scrolls past (stacked effect)
+  const scale = useTransform(progress, range, [1, 0.92]);
+  const opacity = useTransform(progress, range, [1, 0.9]);
+  const y = useTransform(progress, range, [0, -30]);
+
+  // Parallax for the image
+  const imageY = useTransform(progress, range, [0, 50]);
 
   return (
-    <section className="px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-      <div className="mx-auto max-w-6xl space-y-12">
-        <div className="max-w-3xl space-y-4">
-          <p className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-            Selected Work
-          </p>
+    <motion.div
+      ref={cardRef}
+      style={{
+        scale,
+        opacity: index === projects.length - 1 ? 1 : opacity,
+        y,
+        top: `${index * 20}px`,
+      }}
+      className="sticky mb-8 w-full will-change-transform"
+    >
+      <motion.article
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        initial={{ opacity: 0, y: 60 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.9, ease: [0.17, 0.55, 0.55, 1], delay: index * 0.1 }}
+        className="group relative overflow-hidden rounded-3xl bg-white shadow-[0_8px_32px_rgba(0,0,0,0.08)] ring-1 ring-neutral-100"
+      >
+        <div className="grid lg:grid-cols-2">
+          {/* ─── Image Side ─── */}
+          <div className="relative aspect-4/3 overflow-hidden bg-neutral-100 lg:aspect-auto lg:min-h-150">
+            <motion.div style={{ y: imageY }} className="absolute inset-0 will-change-transform">
+              {/* <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              /> */}
+              <Video  src={project.video}  />
+            </motion.div>
 
-          <h2 className="max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-            Real products. Real problems. Thoughtful solutions.
-          </h2>
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-          <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-            Each project is treated as a case study, with a clear narrative, visible proof, and a restrained accent system that still respects the current theme.
-          </p>
-        </div>
+            {/* Year badge */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: 0.3 + index * 0.1 }}
+              className="absolute top-6 left-6"
+            >
+              <span className="inline-flex items-center rounded-full bg-white/90 px-4 py-1.5 text-xs font-mono font-medium text-neutral-900 backdrop-blur-sm">
+                {project.year}
+              </span>
+            </motion.div>
 
-        <div className="space-y-8">
-          {projects.map((project) => {
-            const isOpen = active === project.id;
-            const styles = accentStyle(project);
+            {/* Hover view button */}
+            <motion.div
+              initial={false}
+              animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.9 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/95 shadow-2xl backdrop-blur-sm">
+                <ArrowUpRight className="h-6 w-6 text-neutral-900" />
+              </div>
+            </motion.div>
+          </div>
 
-            return (
-              <article
-                key={project.id}
-                className="overflow-hidden rounded-4xl border border-border bg-card/90 shadow-[0_18px_50px_rgba(0,0,0,0.06)] dark:shadow-[0_24px_70px_rgba(0,0,0,0.28)]"
-                style={{
-                  ...styles,
-                  background:
-                    `linear-gradient(135deg, color-mix(in oklab, ${project.theme.primary} 9%, var(--background)), var(--background))`,
-                }}
+          {/* ─── Content Side ─── */}
+          <div className="flex flex-col justify-between p-8 md:p-12 lg:p-16">
+            <div>
+              {/* Index number */}
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.2 }}
+                className="mb-6 block font-mono text-7xl font-bold text-neutral-100 select-none"
               >
-                <div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
-                  <div className="space-y-6 p-6 sm:p-8 lg:border-r lg:border-border">
-                    <div className="space-y-5">
-                      <div
-                        className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]"
-                        style={{
-                          borderColor: `color-mix(in oklab, ${project.theme.primary} 24%, var(--border))`,
-                          background: `color-mix(in oklab, ${project.theme.primary} 12%, var(--card))`,
-                          color: `color-mix(in oklab, ${project.theme.primary} 72%, var(--foreground))`,
-                        }}
-                      >
-                        {project.category}
-                      </div>
+                {String(index + 1).padStart(2, "0")}
+              </motion.span>
 
-                      <div className="space-y-4">
-                        <h3 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                          {project.name}
-                        </h3>
-                        <p className="max-w-xl text-base leading-7 text-foreground/76 sm:text-lg">
-                          {project.tagline}
-                        </p>
-                        <div
-                          className="h-1.5 w-20 rounded-full"
-                          style={{
-                            background: `linear-gradient(90deg, ${project.theme.primary}, ${project.theme.secondary})`,
-                          }}
-                        />
-                      </div>
-                    </div>
+              {/* Title */}
+              <motion.h3
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="mb-2 text-4xl font-bold tracking-tight text-neutral-900 md:text-5xl lg:text-6xl"
+              >
+                {project.title}
+              </motion.h3>
 
-                    <p className="max-w-xl whitespace-pre-line text-sm leading-6 text-muted-foreground">
-                      {project.summary}
-                    </p>
+              {/* Subtitle */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.4 }}
+                className="mb-6 text-lg font-medium text-neutral-400"
+              >
+                {project.subtitle}
+              </motion.p>
 
-                    <div className="flex flex-wrap gap-2">
-                      {project.highlights.map((highlight) => (
-                        <span
-                          key={highlight}
-                          className="rounded-full border px-3 py-1 text-xs font-medium"
-                          style={{
-                            background: tint(project.theme.primary, 0.08),
-                            borderColor: tint(project.theme.primary, 0.18),
-                            color: `color-mix(in oklab, ${project.theme.primary} 70%, var(--foreground))`,
-                          }}
-                        >
-                          {highlight}
-                        </span>
-                      ))}
-                    </div>
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="mb-8 max-w-md text-base leading-relaxed text-neutral-500"
+              >
+                {project.description}
+              </motion.p>
 
-                    <div className="flex flex-wrap gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setActive(project.id)}
-                        className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium text-background transition-transform duration-200 hover:-translate-y-0.5"
-                        style={{
-                          background: `linear-gradient(135deg, ${project.theme.secondary}, ${project.theme.primary})`,
-                        }}
-                      >
-                        {isOpen ? "Case study open" : "Open case study"}
-                        <ChevronDown
-                          size={16}
-                          className={isOpen ? "rotate-180 transition-transform" : "transition-transform"}
-                        />
-                      </button>
+              {/* Tags */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.6 }}
+                className="flex flex-wrap gap-2"
+              >
+                 <div className="flex flex-wrap items-center gap-3">
+                {project.tags.map((tech) => {
+                  const Icon = tech.icon;
 
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-5 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-                      >
-                        Live
-                        <ArrowUpRight size={16} />
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="p-6 sm:p-8">
-                    <MediaGrid project={project} />
-                  </div>
-                </div>
-
-                {isOpen && (
-                  <div className="border-t border-border p-6 sm:p-8">
-                    <div className="grid gap-4 md:grid-cols-2">
-                      <CaseCard title="Challenge" body={project.challenge} color={project.theme.primary} />
-                      <CaseCard title="Approach" body={project.approach} color={project.theme.primary} />
-                    </div>
-
+                  return (
                     <div
-                      className="mt-4 rounded-3xl border p-6"
-                      style={{
-                        borderColor: `color-mix(in oklab, ${project.theme.secondary} 18%, var(--border))`,
-                        background:
-                          `linear-gradient(135deg, color-mix(in oklab, ${project.theme.primary} 16%, var(--background)), color-mix(in oklab, ${project.theme.secondary} 18%, var(--background)))`,
-                      }}
-                    >
-                      <div className="text-xs font-semibold uppercase tracking-[0.24em] text-foreground/65">
-                        Outcome
-                      </div>
-                      <p className="mt-3 whitespace-pre-line text-sm leading-6 text-foreground/80">
-                        {project.outcome}
-                      </p>
+                      key={tech.name}
+                      title={tech.name}
+                      className="group/icon flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-50  transition-all duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg"
+                      >
+                        <Icon
+                          className="h-5 w-5 transition-transform duration-300 group-hover/icon:scale-110"
+                          style={{ color: tech.color }}
+                        />
                     </div>
+                  );
+                })}
+              </div>
+              </motion.div>
+            </div>
 
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.stack.map((item) => (
-                        <span
-                          key={item}
-                          className="rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </article>
-            );
-          })}
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.7 }}
+              className="mt-12"
+            >
+              <a
+                href={project.link}
+                className="group/btn inline-flex items-center gap-3 text-sm font-semibold text-neutral-900 transition-colors hover:text-neutral-600"
+              >
+                <span className="relative">
+                  View Case Study
+                  <span className="absolute bottom-0 left-0 h-px w-0 bg-current transition-all duration-300 group-hover/btn:w-full" />
+                </span>
+                <ExternalLink className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+              </a>
+            </motion.div>
+          </div>
         </div>
+      </motion.article>
+    </motion.div>
+  );
+}
+
+// ─── Main Component ───
+export default function ProjectShowcase() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  return (
+    <section className="relative bg-neutral-50 py-32">
+      <SectionHeader />
+
+      <div ref={containerRef} className="relative px-6 md:px-12 lg:px-24">
+        {projects.map((project, index) => {
+          const targetScale = 1 - (projects.length - index) * 0.03;
+          const range: [number, number] = [index / projects.length, (index + 1) / projects.length];
+
+          return (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              progress={scrollYProgress}
+              range={range}
+            />
+          );
+        })}
       </div>
+
+      {/* Bottom spacing */}
+      <div className="h-6" />
     </section>
   );
 }
