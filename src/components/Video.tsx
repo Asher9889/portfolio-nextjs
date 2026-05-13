@@ -3,7 +3,7 @@ export default function Video({ src, poster }: { src?: string; poster?: string }
   
   return (
     <video
-      className="h-full w-full object-cover"
+      className="h-full w-full object-cover shadow-lg rounded-lg"
       controls
       autoPlay
       muted

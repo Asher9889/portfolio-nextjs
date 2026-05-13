@@ -231,13 +231,12 @@ function FilterBar({
                 <motion.div
                   layoutId="activeFilter"
                   className="absolute inset-0 rounded-full bg-neutral-900"
-                  // transition={springTransition}
+                // transition={springTransition}
                 />
               )}
               <span
-                className={`relative z-10 ${
-                  activeCategory === cat ? "text-white" : "text-neutral-500 hover:text-neutral-900"
-                }`}
+                className={`relative z-10 ${activeCategory === cat ? "text-white" : "text-neutral-500 hover:text-neutral-900"
+                  }`}
               >
                 {cat}
               </span>
@@ -270,11 +269,10 @@ function FilterBar({
                       onCategoryChange(cat);
                       setIsOpen(false);
                     }}
-                    className={`w-full rounded-xl px-4 py-2.5 text-left text-sm transition-colors ${
-                      activeCategory === cat
+                    className={`w-full rounded-xl px-4 py-2.5 text-left text-sm transition-colors ${activeCategory === cat
                         ? "bg-neutral-900 text-white"
                         : "text-neutral-600 hover:bg-neutral-50"
-                    }`}
+                      }`}
                   >
                     {cat}
                   </button>
@@ -333,7 +331,13 @@ function ProjectCard({
         duration: 0.6,
         delay: index * 0.08,
         ease: [0.17, 0.55, 0.55, 1],
-        layout: springTransition,
+
+        layout: {
+          type: "spring",
+          stiffness: 80,
+          damping: 20,
+          mass: 1.2
+        },
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

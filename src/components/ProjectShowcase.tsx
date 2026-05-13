@@ -2,6 +2,9 @@
 
 
 import aiImage from "@/../public/ai-project.png";
+import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
+
+
 
 import {
   SiReact,
@@ -18,6 +21,7 @@ import {
   SiYolo,
   SiPython,
   SiLivekit,
+  SiN8N,
 } from "react-icons/si";
 
 import { FaReact } from "react-icons/fa";
@@ -32,6 +36,8 @@ import { useRef, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { ArrowUpRight, Layers, ExternalLink } from "lucide-react";
 import Video from "./Video";
+import { Tooltip } from "radix-ui";
+import { TooltipContent, TooltipTrigger } from "./animate-ui/primitives/radix/tooltip";
 
 interface Project {
   id: number;
@@ -78,34 +84,38 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Aether",
-    subtitle: "AI Design System",
-    description:
-      "Generative design tool that transforms natural language prompts into production-ready UI components. 50+ enterprise teams onboarded.",
+    title: "PureCheckup",
+    subtitle: "Digital Healthcare & Appointment Platform",
+    description: "Built a scalable healthcare platform for hospitals that streamlines doctor discovery, online appointment booking, and patient engagement. Designed to provide a seamless digital experience for patients seeking consultations and advanced medical treatments.",
     tags: [
-     { name: "React", icon: FaReact, color: "#61DAFB" },
-      { name: "OpenAI", icon: SiTypescript, color: "#3178C6" },
+      { name: "React", icon: FaReact, color: "#61DAFB" },
+      { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+      { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+      { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+      { name: "N8N", icon: SiN8N, color: "#EA4B71" },
+
       { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
       { name: "Framer Motion", icon: TbBrandFramerMotion },
     ],
     image: "https://plus.unsplash.com/premium_photo-1778134471869-54d3df1db7a3?q=80&w=1325&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    video: "https://res.cloudinary.com/saurabhbackend/video/upload/f_webm,vc_vp9/v1778609091/portfolio/sc5ifeq1sxur56rz72nv",
     color: "#16213e",
     year: "2025",
     link: "#",
   },
   {
     id: 3,
-    title: "Nova",
-    subtitle: "E-Commerce Platform",
-    description:
-      "Headless commerce solution with sub-100ms global latency. Handles 10M+ SKUs with intelligent inventory forecasting.",
-    tags: [
+    title: "Ehrm",
+    subtitle: "Integrating biometric devices, RFID, face recognition, and mobile-based geo-tagged attendance tracking.",
+    description:"Centralized attendance management system that integrates hardware devices such as RFID, fingerprint scanners, and face recognition machines to automate workforce attendance tracking.",
+      tags: [
       { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
       { name: "GraphQL", icon: SiGraphql, color: "#E53544" },
       { name: "Redis", icon: SiRedis, color: "#FF4438" },
       { name: "AWS", icon: SiAmazon, color: "#232F3E" },
     ],
     image: "https://images.unsplash.com/photo-1778431193240-72e7d9c4cd38?q=80&w=1827&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    video: "https://res.cloudinary.com/saurabhbackend/video/upload/f_webm,vc_vp9/v1778609091/portfolio/myss5a3vyvcyfrk5rnig",
     color: "#16213e",
     year: "2025",
     link: "#",
@@ -201,7 +211,7 @@ function ProjectCard({ project, index, progress, range }: {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               /> */}
-              <Video  src={project.video}  />
+              <Video src={project.video} />
             </motion.div>
 
             {/* Gradient overlay */}
@@ -282,24 +292,25 @@ function ProjectCard({ project, index, progress, range }: {
                 transition={{ delay: 0.6 }}
                 className="flex flex-wrap gap-2"
               >
-                 <div className="flex flex-wrap items-center gap-3">
-                {project.tags.map((tech) => {
-                  const Icon = tech.icon;
+                <div className="flex flex-wrap items-center gap-3">
+                  {project.tags.map((tech) => {
+                    const Icon = tech.icon as React.ElementType;
 
-                  return (
-                    <div
-                      key={tech.name}
-                      title={tech.name}
-                      className="group/icon flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-50  transition-all duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg"
+                    return (
+                      <div
+                        key={tech.name}
+                        title={tech.name}
+                        className="group/icon flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-50  transition-all duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg"
                       >
                         <Icon
                           className="h-5 w-5 transition-transform duration-300 group-hover/icon:scale-110"
                           style={{ color: tech.color }}
                         />
-                    </div>
-                  );
-                })}
-              </div>
+                      </div>
+
+                    );
+                  })}
+                </div>
               </motion.div>
             </div>
 
