@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { SiDocker, SiGit, SiGithub, SiMongodb, SiNginx, SiNodedotjs, SiNpm, SiPm2, SiReact, SiReactquery, SiRedis, SiRedux } from "react-icons/si";
 import ExpertiseSection from "./ExpertiseSection";
+import OrbitalTechStack from "@/features/home/components/OrbitalTechStack";
 
 // ─── Accent Colors ───
 const A = {
@@ -332,7 +333,7 @@ function PhilosophySection() {
                 >
                     <div className="h-px w-12" style={{ backgroundColor: A.gold }} />
                     <span className="text-sm font-mono" style={{ color: A.gold }}>
-            my philosophy
+                        my philosophy
                     </span>
                 </motion.div>
             </div>
@@ -497,6 +498,9 @@ function HeroSection() {
                 </div>
 
                 {/* Right: Visual */}
+                {/* <div className="relative w-full h-[600px]">
+                    <OrbitalTechStack />
+                </div> */}
                 <motion.div
                     initial={!prefersReducedMotion ? { opacity: 0, scale: 0.9 } : undefined}
                     animate={!prefersReducedMotion && isInView ? { opacity: 1, scale: 1 } : undefined}
@@ -756,7 +760,7 @@ export default function AboutMe() {
 
             <div className="relative z-10">
                 <HeroSection />
-                <Stats />
+                {/* <Stats /> */}
                 <ExpertiseSection />
 
                 <PhilosophySection />

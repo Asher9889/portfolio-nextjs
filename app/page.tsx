@@ -18,12 +18,14 @@ export default function Home() {
         <Hero />
 
         <ProjectShowcase />
-        <Stats />
+        {/* <Stats /> */}
         {/* <ProjectGrid /> */}
         {/* <LandingPage /> */}
         <AboutMe />  { /* Multiple components */ }
         <Contact />
         <Footer />
+
+        
       {/* </TooltipProvider> */}
     </main>
   );
