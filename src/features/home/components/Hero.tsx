@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, Layers } from "lucide-react";
 import Image from "next/image";
-import whatsaapIcon from "../../public/whatsapp-icon.png";
+import whatsaapIcon from "../../../../public/whatsapp-icon.png";
 
 export default function Hero() {
   const prefersReducedMotion = useReducedMotion();

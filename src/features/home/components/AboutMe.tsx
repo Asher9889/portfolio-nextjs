@@ -1,31 +1,17 @@
 "use client";
 
+import "./AboutMe.css";
 import { useRef, useState, useEffect } from "react";
 import {
     motion,
-    useScroll,
-    useTransform,
     useInView,
-    AnimatePresence,
     useReducedMotion,
 } from "framer-motion";
 import {
-    Code2,
-    Brain,
-    Layers,
-    Zap,
-    Terminal,
-    Cpu,
     Sparkles,
     ArrowUpRight,
     Quote,
-    Star,
     ChevronRight,
-    Braces,
-    Binary,
-    Globe,
-    Database,
-    Eye,
 } from "lucide-react";
 import { SiDocker, SiGit, SiGithub, SiMongodb, SiNginx, SiNodedotjs, SiNpm, SiPm2, SiReact, SiReactquery, SiRedis, SiRedux } from "react-icons/si";
 import ExpertiseSection from "./ExpertiseSection";
@@ -69,9 +55,9 @@ function OrbitRing({ radius, duration, children, reverse = false }: any) {
         <motion.div
             animate={{ rotate: reverse ? -360 : 360 }}
             transition={{ duration, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            className="am-orbit-ring"
         >
-            <div className="relative" style={{ width: radius * 2, height: radius * 2 }}>
+            <div className="am-orbit-ring-inner" style={{ width: radius * 2, height: radius * 2 }}>
                 {children}
             </div>
         </motion.div>
@@ -85,7 +71,7 @@ function OrbitIcon({ icon: Icon, angle, color }: any) {
 
     return (
         <div
-            className="absolute flex h-10 w-10 items-center justify-center rounded-xl border backdrop-blur-sm"
+            className="am-orbit-icon"
             style={{
                 left: `calc(50% + ${x * 100}% - 20px)`,
                 top: `calc(50% + ${y * 100}% - 20px)`,
@@ -94,7 +80,7 @@ function OrbitIcon({ icon: Icon, angle, color }: any) {
                 transform: `rotate(${-angle}deg)`,
             }}
         >
-            <Icon className="h-4 w-4" style={{ color }} />
+            <Icon style={{ color }} size={16} />
         </div>
     );
 }
@@ -102,19 +88,18 @@ function OrbitIcon({ icon: Icon, angle, color }: any) {
 // ─── Skill Orbit ───
 function SkillOrbit() {
     return (
-        <div className="relative h-80 w-80 md:h-96 md:w-96 mx-auto">
+        <div className="am-orbit-container">
             {/* Center */}
-            <div className="absolute inset-0 flex items-center justify-center z-10">
+            <div className="am-orbit-center">
                 <div
-                    className="h-20 w-20 rounded-full flex items-center justify-center border"
+                    className="am-orbit-center-inner"
                     style={{
                         borderColor: `${A.gold}40`,
                         backgroundColor: `${A.gold}10`,
                         boxShadow: `0 0 60px ${A.goldSoft}`,
                     }}
                 >
-                    {/* <Sparkles className="h-8 w-8" style={{ color: A.gold }} /> */}
-                    <p style={{ color: A.gold }} className="text-xs font-medium">Tech Stack</p>
+                    <p className="am-orbit-center-text" style={{ color: A.gold }}>Tech Stack</p>
                 </div>
             </div>
 
@@ -141,18 +126,9 @@ function SkillOrbit() {
             </OrbitRing>
 
             {/* Decorative rings */}
-            <div
-                className="absolute inset-8 rounded-full border opacity-10"
-                style={{ borderColor: A.gold }}
-            />
-            <div
-                className="absolute inset-0 rounded-full border opacity-5"
-                style={{ borderColor: A.gold }}
-            />
-            <div
-                className="absolute inset-16 rounded-full border opacity-15"
-                style={{ borderColor: A.gold }}
-            />
+            <div className="am-orbit-deco-ring am-orbit-deco-ring-1" />
+            <div className="am-orbit-deco-ring am-orbit-deco-ring-3" />
+            <div className="am-orbit-deco-ring am-orbit-deco-ring-2" />
         </div>
     );
 }
@@ -206,7 +182,6 @@ function ExpertiseCard({
 }) {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-50px" });
-    const [hovered, setHovered] = useState(false);
 
     return (
         <motion.div
@@ -214,56 +189,44 @@ function ExpertiseCard({
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            className="relative group rounded-2xl border p-6 md:p-8 transition-all duration-500 overflow-hidden"
+            className="am-expertise-card"
             style={{
-                backgroundColor: hovered ? `${color}08` : "rgba(255,255,255,0.02)",
-                borderColor: hovered ? `${color}25` : "rgba(255,255,255,0.06)",
-            }}
+                "--card-accent": color,
+                "--card-accent-bg": `${color}08`,
+                "--card-accent-border": `${color}25`,
+                "--card-accent-icon-border": `${color}30`,
+                "--card-accent-icon-bg": `${color}10`,
+            } as React.CSSProperties}
         >
-            {/* Glow on hover */}
             <div
-                className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[80px] transition-opacity duration-500 pointer-events-none"
-                style={{ backgroundColor: color, opacity: hovered ? 0.12 : 0 }}
+                className="am-expertise-card-glow"
+                style={{ backgroundColor: color, opacity: 0.12 }}
             />
 
             <div className="relative z-10">
                 <div
-                    className="inline-flex items-center justify-center h-12 w-12 rounded-xl mb-5 border"
+                    className="am-expertise-card-icon"
                     style={{
                         borderColor: `${color}30`,
                         backgroundColor: `${color}10`,
                     }}
                 >
-                    <Icon className="h-5 w-5" style={{ color }} />
+                    <Icon style={{ color }} size={20} />
                 </div>
 
-                <h4 className="text-xl font-bold text-white mb-4">{title}</h4>
+                <h4 className="am-expertise-card-title">{title}</h4>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="am-expertise-skills">
                     {skills.map((skill, i) => (
                         <motion.span
                             key={skill}
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={isInView ? { opacity: 1, scale: 1 } : {}}
                             transition={{ delay: delay + 0.1 * i, duration: 0.4 }}
-                            className="text-xs font-medium px-3 py-1.5 rounded-full border transition-all duration-300"
+                            className="am-expertise-skill"
                             style={{
-                                borderColor: "rgba(255,255,255,0.08)",
-                                color: "rgba(255,255,255,0.6)",
-                                backgroundColor: "rgba(255,255,255,0.03)",
-                            }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.borderColor = `${color}40`;
-                                e.currentTarget.style.color = "#fff";
-                                e.currentTarget.style.backgroundColor = `${color}10`;
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-                                e.currentTarget.style.color = "rgba(255,255,255,0.6)";
-                                e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.03)";
-                            }}
+                                "--skill-accent": color,
+                            } as React.CSSProperties}
                         >
                             {skill}
                         </motion.span>
@@ -290,20 +253,21 @@ function PhilosophySection() {
     ];
 
     return (
-        <div ref={ref} className="py-32 md:py-40 px-6 md:px-12 lg:px-20 xl:px-28">
-            <div className="max-w-5xl mx-auto">
+        <div ref={ref} className="am-philosophy">
+            <div className="am-philosophy-inner">
                 {/* Quote Icon */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ duration: 0.6 }}
-                    className="mb-10"
+                    className="am-philosophy-quote-icon"
+                    style={{ marginBottom: "2.5rem" }}
                 >
-                    <Quote className="h-12 w-12" style={{ color: A.gold }} />
+                    <Quote size={48} />
                 </motion.div>
 
                 {/* Lines */}
-                <div className="space-y-2">
+                <div className="am-philosophy-lines">
                     {lines.map((line, i) => (
                         <motion.p
                             key={i}
@@ -314,9 +278,9 @@ function PhilosophySection() {
                                 duration: 0.7,
                                 ease: [0.16, 1, 0.3, 1],
                             }}
-                            className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight"
+                            className="am-philosophy-line"
                             style={{
-                                color: i < 2 ? A.text.primary : A.text.secondary,
+                                color: i < 2 ? "var(--am-text-primary)" : "var(--am-text-secondary)",
                             }}
                         >
                             {line}
@@ -329,10 +293,10 @@ function PhilosophySection() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 1.4, duration: 0.6 }}
-                    className="mt-12 flex items-center gap-4"
+                    className="am-philosophy-signature"
                 >
-                    <div className="h-px w-12" style={{ backgroundColor: A.gold }} />
-                    <span className="text-sm font-mono" style={{ color: A.gold }}>
+                    <div className="am-philosophy-signature-line" />
+                    <span className="am-philosophy-signature-text">
                         my philosophy
                     </span>
                 </motion.div>
@@ -354,37 +318,26 @@ function Stats() {
     ];
 
     return (
-        <div
-            ref={ref}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 px-6 md:px-12 lg:px-20 xl:px-28 py-20"
-        >
+        <div ref={ref} className="am-stats">
             {stats.map((stat, i) => (
                 <motion.div
                     key={stat.label}
                     initial={{ opacity: 0, y: 30 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: i * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative rounded-2xl border p-6 md:p-8 text-center group"
+                    className="am-stat-card"
                     style={{
-                        backgroundColor: "rgba(255,255,255,0.02)",
-                        borderColor: "rgba(255,255,255,0.06)",
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = `${stat.color}30`;
-                        e.currentTarget.style.backgroundColor = `${stat.color}06`;
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
-                        e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)";
-                    }}
+                        "--card-accent": stat.color,
+                        "--card-accent-soft": `${stat.color}06`,
+                    } as React.CSSProperties}
                 >
                     <div
-                        className="text-3xl md:text-4xl font-bold mb-2"
+                        className="am-stat-value"
                         style={{ color: stat.color }}
                     >
                         <Counter value={stat.value} suffix={stat.suffix} />
                     </div>
-                    <div className="text-xs md:text-sm font-medium" style={{ color: A.text.secondary }}>
+                    <div className="am-stat-label">
                         {stat.label}
                     </div>
                 </motion.div>
@@ -402,23 +355,20 @@ function HeroSection() {
     return (
         <div
             ref={ref}
-            className="relative min-h-screen flex items-center px-6 md:px-12 lg:px-20 xl:px-28 pt-20"
+            className="am-hero"
         >
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full max-w-7xl mx-auto">
+            <div className="am-hero-grid am-max-content">
                 {/* Left: Text */}
-                <div className="order-2 lg:order-1 space-y-6">
+                <div className="order-2 lg:order-1" style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                     {/* Label */}
                     <motion.div
                         initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
                         animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
                         transition={{ duration: 0.6 }}
-                        className="flex items-center gap-3"
+                        className="am-eyebrow"
                     >
-                        <div className="h-px w-8" style={{ backgroundColor: A.gold }} />
-                        <span
-                            className="text-xs font-mono uppercase tracking-[0.25em]"
-                            style={{ color: A.gold }}
-                        >
+                        <div className="am-eyebrow-line" />
+                        <span style={{ color: "var(--am-gold)" }}>
                             About Me
                         </span>
                     </motion.div>
@@ -428,15 +378,15 @@ function HeroSection() {
                         initial={!prefersReducedMotion ? { opacity: 0, y: 30 } : undefined}
                         animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
                         transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                        className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1]"
+                        className="am-hero-headline"
                     >
-                        <span className="text-white">I build</span>
+                        <span className="am-text-white">I build</span>
                         <br />
-                        <span style={{ color: A.gold }}>
+                        <span style={{ color: "var(--am-gold)" }}>
                             intelligent
                         </span>
                         <br />
-                        <span className="text-white">systems.</span>
+                        <span className="am-text-white">systems.</span>
                     </motion.h1>
 
                     {/* Role */}
@@ -444,9 +394,9 @@ function HeroSection() {
                         initial={!prefersReducedMotion ? { opacity: 0 } : undefined}
                         animate={!prefersReducedMotion && isInView ? { opacity: 1 } : undefined}
                         transition={{ delay: 0.4 }}
-                        className="h-8 flex items-center"
+                        className="am-hero-role"
                     >
-                        <span className="text-lg font-mono" style={{ color: A.cyan }}>
+                        <span className="am-mono-lg" style={{ color: "var(--am-cyan)" }}>
                             Full Stack Developer &bull; AI Engineer &bull; Problem Solver
                         </span>
                     </motion.div>
@@ -456,12 +406,11 @@ function HeroSection() {
                         initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
                         animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
                         transition={{ delay: 0.5, duration: 0.7 }}
-                        className="text-base md:text-lg leading-relaxed max-w-lg"
-                        style={{ color: A.text.secondary }}
+                        className="am-hero-description"
                     >
                         I'm a passionate developer who lives at the intersection of
-                        <span style={{ color: A.gold }}> artificial intelligence</span> and
-                        <span style={{ color: A.cyan }}> full-stack engineering</span>. I
+                        <span style={{ color: "var(--am-gold)" }}> artificial intelligence</span> and
+                        <span style={{ color: "var(--am-cyan)" }}> full-stack engineering</span>. I
                         craft scalable web applications infused with machine learning,
                         turning complex problems into elegant, intelligent solutions.
                     </motion.p>
@@ -471,36 +420,27 @@ function HeroSection() {
                         initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
                         animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
                         transition={{ delay: 0.7, duration: 0.6 }}
-                        className="flex flex-wrap items-center gap-4 pt-4"
+                        style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "1rem", paddingTop: "1rem" }}
                     >
                         <a
                             href="#contact"
-                            className="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                            style={{ backgroundColor: A.gold }}
+                            className="am-cta-primary"
                         >
                             Let's Connect
-                            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                            <ArrowUpRight className="am-icon-arrow" size={16} />
                         </a>
                         <a
                             href="#work"
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border transition-all duration-300 hover:bg-white/5"
-                            style={{
-                                borderColor: "rgba(255,255,255,0.15)",
-                                color: "rgba(255,255,255,0.7)",
-                            }}
+                            className="am-cta-secondary"
                         >
                             See My Work
-                            <ChevronRight className="h-4 w-4" />
+                            <ChevronRight size={16} />
                         </a>
                     </motion.div>
 
 
                 </div>
 
-                {/* Right: Visual */}
-                {/* <div className="relative w-full h-[600px]">
-                    <OrbitalTechStack />
-                </div> */}
                 <motion.div
                     initial={!prefersReducedMotion ? { opacity: 0, scale: 0.9 } : undefined}
                     animate={!prefersReducedMotion && isInView ? { opacity: 1, scale: 1 } : undefined}
@@ -565,34 +505,28 @@ function Timeline() {
     ];
 
     return (
-        <div ref={ref} className="px-6 md:px-12 lg:px-20 xl:px-28 py-20">
+        <div ref={ref} className="am-timeline">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7 }}
-                className="text-center mb-16"
+                className="am-timeline-header"
             >
-                <div className="flex items-center justify-center gap-3 mb-4">
-                    <div className="h-px w-6" style={{ backgroundColor: A.cyan }} />
-                    <span
-                        className="text-xs font-mono uppercase tracking-[0.25em]"
-                        style={{ color: A.cyan }}
-                    >
+                <div className="am-eyebrow" style={{ justifyContent: "center" }}>
+                    <div className="am-eyebrow-line" style={{ backgroundColor: "var(--am-cyan)" }} />
+                    <span style={{ color: "var(--am-cyan)" }}>
                         Journey
                     </span>
-                    <div className="h-px w-6" style={{ backgroundColor: A.cyan }} />
+                    <div className="am-eyebrow-line" style={{ backgroundColor: "var(--am-cyan)" }} />
                 </div>
-                <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
+                <h2 className="am-timeline-header-title">
                     My Path
                 </h2>
             </motion.div>
 
-            <div className="max-w-3xl mx-auto relative">
+            <div className="am-timeline-container">
                 {/* Vertical Line */}
-                <div
-                    className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px -translate-x-1/2"
-                    style={{ backgroundColor: "rgba(255,255,255,0.08)" }}
-                />
+                <div className="am-timeline-line" />
 
                 {milestones.map((m, i) => {
                     const isLeft = i % 2 === 0;
@@ -606,16 +540,17 @@ function Timeline() {
                                 duration: 0.7,
                                 ease: [0.16, 1, 0.3, 1],
                             }}
-                            className={`relative flex items-start gap-6 md:gap-0 mb-12 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"
-                                }`}
+                            className="am-timeline-item"
+                            style={{
+                                "--timeline-color": m.color,
+                            } as React.CSSProperties}
                         >
                             {/* Dot */}
-                            <div className="absolute left-4 md:left-1/2 -translate-x-1/2 z-10">
+                            <div className="am-timeline-dot">
                                 <div
-                                    className="h-3 w-3 rounded-full border-2"
+                                    className="am-timeline-dot-inner"
                                     style={{
                                         borderColor: m.color,
-                                        backgroundColor: "#070708",
                                         boxShadow: `0 0 12px ${m.color}40`,
                                     }}
                                 />
@@ -623,11 +558,11 @@ function Timeline() {
 
                             {/* Content */}
                             <div
-                                className={`ml-10 md:ml-0 md:w-1/2 ${isLeft ? "md:pr-12 md:text-right" : "md:pl-12"
+                                className={`am-timeline-content ${isLeft ? "md:pr-12 md:text-right" : "md:pl-12"
                                     }`}
                             >
                                 <span
-                                    className="inline-block text-xs font-mono px-3 py-1 rounded-full mb-2"
+                                    className="am-timeline-year"
                                     style={{
                                         backgroundColor: `${m.color}15`,
                                         color: m.color,
@@ -635,10 +570,8 @@ function Timeline() {
                                 >
                                     {m.year}
                                 </span>
-                                <h4 className="text-lg font-bold text-white mb-1">{m.title}</h4>
-                                <p className="text-sm" style={{ color: A.text.secondary }}>
-                                    {m.desc}
-                                </p>
+                                <h4 className="am-timeline-item-title">{m.title}</h4>
+                                <p className="am-timeline-desc">{m.desc}</p>
                             </div>
                         </motion.div>
                     );
@@ -654,54 +587,46 @@ function CTASection() {
     const isInView = useInView(ref, { once: true, margin: "-80px" });
 
     return (
-        <div ref={ref} className="px-6 md:px-12 lg:px-20 xl:px-28 py-32">
+        <div ref={ref} className="am-cta-section">
             <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8 }}
-                className="relative max-w-4xl mx-auto text-center rounded-3xl border p-12 md:p-16 overflow-hidden"
-                style={{
-                    backgroundColor: "rgba(255,255,255,0.02)",
-                    borderColor: "rgba(255,255,255,0.06)",
-                }}
+                className="am-cta-card"
             >
                 {/* Background glow */}
-                <div
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[120px] pointer-events-none"
-                    style={{ backgroundColor: A.gold, opacity: 0.08 }}
-                />
+                <div className="am-cta-card-glow" />
 
-                <div className="relative z-10 space-y-6">
+                <div className="am-cta-card-content">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.5 }}
                         animate={isInView ? { opacity: 1, scale: 1 } : {}}
                         transition={{ delay: 0.2 }}
-                        className="inline-flex items-center justify-center h-14 w-14 rounded-full border mb-4"
+                        className="am-cta-card-icon"
                         style={{
-                            borderColor: `${A.gold}30`,
-                            backgroundColor: `${A.gold}10`,
+                            borderColor: "var(--am-gold-soft)",
+                            backgroundColor: "var(--am-gold-soft)",
                         }}
                     >
-                        <Sparkles className="h-6 w-6" style={{ color: A.gold }} />
+                        <Sparkles size={24} style={{ color: "var(--am-gold)" }} />
                     </motion.div>
 
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ delay: 0.3 }}
-                        className="text-3xl md:text-5xl font-bold text-white tracking-tight"
+                        className="am-cta-card-title"
                     >
                         Let's build something
                         <br />
-                        <span style={{ color: A.gold }}>extraordinary</span> together.
+                        <span style={{ color: "var(--am-gold)" }}>extraordinary</span> together.
                     </motion.h2>
 
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={isInView ? { opacity: 1 } : {}}
                         transition={{ delay: 0.5 }}
-                        className="text-base md:text-lg max-w-lg mx-auto"
-                        style={{ color: A.text.secondary }}
+                        className="am-cta-card-desc"
                     >
                         Whether it's an AI-powered product, a scalable platform, or an
                         ambitious idea — I'm ready to bring it to life.
@@ -715,14 +640,11 @@ function CTASection() {
                     >
                         <a
                             href="#contact"
-                            className="group inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold text-black transition-all duration-300 hover:scale-105"
-                            style={{
-                                backgroundColor: A.gold,
-                                boxShadow: `0 0 40px ${A.goldMid}`,
-                            }}
+                            className="am-cta-card-button"
+                            style={{ boxShadow: "0 0 40px var(--am-gold-mid)" }}
                         >
                             Start a Conversation
-                            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                            <ArrowUpRight className="am-icon-arrow" size={16} />
                         </a>
                     </motion.div>
                 </div>
@@ -734,38 +656,49 @@ function CTASection() {
 // ─── Main Component ───
 export default function AboutMe() {
     return (
-        <section
-            id="about"
-            className="relative overflow-hidden"
-            style={{ backgroundColor: "#070708" }}
-        >
+        <section id="about" className="am-section">
             {/* Ambient Background */}
-            <div className="absolute inset-0 pointer-events-none">
+            <div className="am-ambient">
                 <div
-                    className="absolute inset-0 opacity-[0.015]"
+                    className="am-grid-overlay"
                     style={{
+                        opacity: 0.015,
                         backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
                         backgroundSize: "80px 80px",
                     }}
                 />
                 <div
-                    className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full blur-[180px]"
-                    style={{ backgroundColor: A.gold, opacity: 0.04 }}
+                    className="am-blob"
+                    style={{
+                        top: "-10rem",
+                        right: "-10rem",
+                        width: "500px",
+                        height: "500px",
+                        backgroundColor: "var(--am-gold)",
+                        opacity: 0.04,
+                        filter: "blur(180px)",
+                    }}
                 />
                 <div
-                    className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full blur-[160px]"
-                    style={{ backgroundColor: A.cyan, opacity: 0.03 }}
+                    className="am-blob"
+                    style={{
+                        bottom: "-10rem",
+                        left: "-10rem",
+                        width: "400px",
+                        height: "400px",
+                        backgroundColor: "var(--am-cyan)",
+                        opacity: 0.03,
+                        filter: "blur(160px)",
+                    }}
                 />
             </div>
 
             <div className="relative z-10">
                 <HeroSection />
-                {/* <Stats /> */}
                 <ExpertiseSection />
 
                 <PhilosophySection />
                 <Timeline />
-                {/* <CTASection /> */}
             </div>
         </section>
     );
