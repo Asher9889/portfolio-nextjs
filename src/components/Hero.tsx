@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, Layers } from "lucide-react";
 import Image from "next/image";
 import whatsaapIcon from "../../public/whatsapp-icon.png";
 
 export default function Hero() {
+  const prefersReducedMotion = useReducedMotion();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,9 +29,9 @@ export default function Hero() {
       {/* Background subtle elements can go here if needed */}
 
       <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
+        variants={!prefersReducedMotion ? containerVariants : undefined}
+        initial={!prefersReducedMotion ? "hidden" : undefined}
+        animate={!prefersReducedMotion ? "visible" : undefined}
         className="flex flex-col items-center w-full max-w-6xl mx-auto z-10"
       >
 
@@ -48,7 +49,7 @@ export default function Hero() {
             <Image
               src={whatsaapIcon}
               priority={true}
-              alt="Whatsaap Icon"
+              alt="WhatsApp Icon"
               className="w-6 h-6 object-contain"
             />
             <svg
@@ -116,7 +117,7 @@ export default function Hero() {
           <div className="text-sm md:text-base font-bold text-black uppercase tracking-wide">
             FULL STACK DEV,
             <br />
-            <span className="text-black/40 font-medium">& DESIGNER</span>
+            <span className="text-black/40 font-medium">& Mobile Developer</span>
           </div>
         </div>
       </motion.div>

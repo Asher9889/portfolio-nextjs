@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, AnimatePresence, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import {
   SiNextdotjs,
@@ -166,38 +166,24 @@ function useSpotlight(ref: React.RefObject<HTMLElement | null>) {
   return { mouse, isHovering };
 }
 
-// ─── Animated Counter ───
-function AnimatedNumber({ value, inView }: { value: number; inView: boolean }) {
-  return (
-    <motion.span
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
-      className="font-mono text-xs tracking-widest uppercase"
-      style={{ color: "rgba(255,255,255,0.3)" }}
-    >
-      {String(value).padStart(2, "0")}
-    </motion.span>
-  );
-}
-
 // ─── Section Header ───
 function SectionHeader() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <div ref={ref} className="mb-20 px-6 md:px-12 lg:px-20 xl:px-28">
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        initial={!prefersReducedMotion ? { opacity: 0, y: 50 } : undefined}
+        animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
       >
         <div className="space-y-4">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={!prefersReducedMotion ? { opacity: 0, x: -20 } : undefined}
+            animate={!prefersReducedMotion && isInView ? { opacity: 1, x: 0 } : undefined}
             transition={{ delay: 0.2, duration: 0.6 }}
             className="flex items-center gap-3"
           >
@@ -223,8 +209,8 @@ function SectionHeader() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+          initial={!prefersReducedMotion ? { opacity: 0 } : undefined}
+          animate={!prefersReducedMotion && isInView ? { opacity: 1 } : undefined}
           transition={{ delay: 0.5 }}
           className="flex items-center gap-3 text-sm"
           style={{ color: "rgba(255,255,255,0.4)" }}
@@ -242,11 +228,12 @@ function SectionHeader() {
 // ─── Tech Tag ───
 function TechTag({ tech, index, accent }: { tech: Tech; index: number; accent: string }) {
   const Icon = tech.icon;
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={!prefersReducedMotion ? { opacity: 0, y: 10 } : undefined}
+      animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
       transition={{ delay: 0.1 * index, duration: 0.4 }}
       className="group/tag relative flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-300 hover:scale-105 cursor-default"
       style={{
@@ -292,6 +279,7 @@ function ProjectCard({
   const isInView = useInView(cardRef, { once: true, margin: "-15%" });
   const [isHovered, setIsHovered] = useState(false);
   const { mouse, isHovering } = useSpotlight(cardRef);
+  const prefersReducedMotion = useReducedMotion();
 
   const scale = useTransform(progress, range, [1, 0.94]);
   const opacity = useTransform(progress, range, [1, 0.85]);
@@ -315,8 +303,8 @@ function ProjectCard({
       <motion.article
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        initial={{ opacity: 0, y: 80 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        initial={!prefersReducedMotion ? { opacity: 0, y: 80 } : undefined}
+        animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
         transition={{
           duration: 1,
           ease: [0.16, 1, 0.3, 1],

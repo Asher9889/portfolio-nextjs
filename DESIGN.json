@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-19T00:00:00.000Z",
+  "title": "Design System: Saurabh Kushwaha Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "gold": {
+        "role": "primary",
+        "displayName": "Signature Gold",
+        "canonical": "oklch(78% 0.14 85)",
+        "tonalRamp": ["#3d2e0c", "#6b4f15", "#94701e", "#be9127", "#e8b84b", "#edc96e", "#f3db96", "#f9edc3"]
+      },
+      "coral": {
+        "role": "secondary",
+        "displayName": "Project Coral",
+        "canonical": "oklch(58% 0.2 30)",
+        "tonalRamp": ["#2e110b", "#5a2216", "#853221", "#b1432c", "#e8553a", "#ed755e", "#f39987", "#f8bfb4"]
+      },
+      "emerald": {
+        "role": "secondary",
+        "displayName": "Project Emerald",
+        "canonical": "oklch(72% 0.16 160)",
+        "tonalRamp": ["#0a2e1a", "#145633", "#1f7d4b", "#29a564", "#34d399", "#5ddcad", "#85e6c2", "#b2f1d9"]
+      },
+      "sapphire": {
+        "role": "secondary",
+        "displayName": "Project Sapphire",
+        "canonical": "oklch(66% 0.14 250)",
+        "tonalRamp": ["#0e1f3d", "#1c3c74", "#295aab", "#3e77d6", "#60a5fa", "#80b9fb", "#a3cdfd", "#c8e2fe"]
+      },
+      "cyan": {
+        "role": "tertiary",
+        "displayName": "Accent Cyan",
+        "canonical": "oklch(78% 0.12 195)",
+        "tonalRamp": ["#062b30", "#0c5560", "#128090", "#18aac0", "#22d3ee", "#4edcf2", "#7ee5f6", "#b2effa"]
+      },
+      "rose": {
+        "role": "tertiary",
+        "displayName": "Accent Rose",
+        "canonical": "oklch(68% 0.18 10)",
+        "tonalRamp": ["#361017", "#6b202d", "#a13044", "#d6415a", "#fb7185", "#fc8f9e", "#fdaeb9", "#feced5"]
+      },
+      "violet": {
+        "role": "tertiary",
+        "displayName": "Accent Violet",
+        "canonical": "oklch(68% 0.16 280)",
+        "tonalRamp": ["#23183d", "#453078", "#6847b2", "#8863d7", "#a78bfa", "#bca3fb", "#d1bdfd", "#e7d8fe"]
+      },
+      "bg-dark": {
+        "role": "neutral",
+        "displayName": "Canvas Dark",
+        "canonical": "oklch(4% 0.002 85)",
+        "tonalRamp": ["#070708", "#121214", "#1e1e21", "#2b2b2f", "#39393e", "#48484d", "#58585e", "#696970"]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Text Primary (Dark)",
+        "canonical": "oklch(98% 0.002 85)"
+      },
+      "text-secondary": {
+        "role": "neutral",
+        "displayName": "Text Secondary (Dark)",
+        "canonical": "oklch(75% 0.003 85)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display / Hero",
+        "purpose": "Hero name only. Massive uppercase statement."
+      },
+      "headline": {
+        "displayName": "Headline / Section Titles",
+        "purpose": "Section headers like 'Selected Works', 'What I Craft'."
+      },
+      "title": {
+        "displayName": "Title / Card Headers",
+        "purpose": "Project names, expertise card titles."
+      },
+      "body": {
+        "displayName": "Body / Descriptions",
+        "purpose": "All paragraph text, project descriptions, about copy."
+      },
+      "label": {
+        "displayName": "Label / Metadata",
+        "purpose": "Section eyebrows, counters, dates, tags, stats — always Geist Mono."
+      }
+    },
+    "shadows": [
+      { "name": "project-card-rest", "value": "0 8px 40px rgba(0,0,0,0.3)", "purpose": "Ambient shadow under project cards at rest." },
+      { "name": "project-card-hover", "value": "0 0 80px {accent}12, 0 25px 60px rgba(0,0,0,0.5)", "purpose": "Accent glow shadow on project card hover." },
+      { "name": "tilt-card-rest", "value": "0 4px 24px -8px rgba(0,0,0,0.5)", "purpose": "Subtle card separation for tilt cards at rest." },
+      { "name": "tilt-card-hover", "value": "0 20px 60px -15px {accentGlow}", "purpose": "Colored shadow for tilt cards on hover." },
+      { "name": "nav-pill", "value": "0 2px 10px rgba(0,0,0,0.05)", "purpose": "Navigation pill container shadow." },
+      { "name": "hero-pill-rest", "value": "0 2px 15px rgba(0,0,0,0.06)", "purpose": "Hero say-hi pill at rest." },
+      { "name": "hero-pill-hover", "value": "0 4px 20px rgba(0,0,0,0.1)", "purpose": "Hero say-hi pill on hover." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default easing for all entrance animations, card reveals, parallax. Used throughout." },
+      { "name": "ease-out-custom-hero", "value": "cubic-bezier(0.21, 0.47, 0.32, 0.98)", "purpose": "Hero entrance easing for staggered name/headline reveal." },
+      { "name": "duration-standard", "value": "0.6s to 0.8s", "purpose": "Standard entrance animation duration." },
+      { "name": "duration-hover", "value": "0.3s", "purpose": "Hover state transitions (border, shadow, scale)." },
+      { "name": "duration-scroll", "value": "linked to scroll progress", "purpose": "Sticky scroll transforms — scale, opacity, y mapped via useTransform." },
+      { "name": "spring-tilt", "value": "damping: 25, stiffness: 200", "purpose": "Spring physics for 3D tilt card rotation." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Dark Button",
+      "kind": "button",
+      "refersTo": "button-primary-dark",
+      "description": "Primary CTA for dark sections. 'Book a Call' in nav, dark backgrounds.",
+      "html": "<button class=\"ds-btn-primary-dark\">✨ Book a Call</button>",
+      "css": ".ds-btn-primary-dark { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #222222; color: #ffffff; font-family: Geist, Arial, Helvetica, sans-serif; font-size: 0.875rem; font-weight: 500; border: none; border-radius: 9999px; cursor: pointer; transition: background 0.3s ease; } .ds-btn-primary-dark:hover { background: #000000; }"
+    },
+    {
+      "name": "Primary Gold Button",
+      "kind": "button",
+      "refersTo": "button-primary-gold",
+      "description": "Primary CTA on dark backgrounds. 'Let's Connect' in About section.",
+      "html": "<a class=\"ds-btn-gold\" href=\"#contact\">Let's Connect <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 17L17 7\"/><path d=\"M7 7h10v10\"/></svg></a>",
+      "css": ".ds-btn-gold { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #E8B84B; color: #000000; font-family: Geist, Arial, Helvetica, sans-serif; font-size: 0.875rem; font-weight: 600; text-decoration: none; border: none; border-radius: 9999px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; } .ds-btn-gold:hover { transform: scale(1.05); box-shadow: 0 10px 25px -5px rgba(232,184,75,0.4); } .ds-btn-gold svg { width: 1rem; height: 1rem; transition: transform 0.3s ease; } .ds-btn-gold:hover svg { transform: translate(2px, -2px); }"
+    },
+    {
+      "name": "Ghost Border Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action on dark backgrounds. 'See My Work' in About.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#work\">See My Work <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 18l6-6-6-6\"/></svg></a>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: transparent; color: rgba(255,255,255,0.7); font-family: Geist, Arial, Helvetica, sans-serif; font-size: 0.875rem; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 9999px; cursor: pointer; transition: background 0.3s ease, color 0.3s ease; } .ds-btn-ghost:hover { background: rgba(255,255,255,0.05); color: #ffffff; } .ds-btn-ghost svg { width: 1rem; height: 1rem; }"
+    },
+    {
+      "name": "Nav Pill - Active Link",
+      "kind": "nav",
+      "refersTo": "nav-link-active",
+      "description": "Active navigation link inside the white nav pill.",
+      "html": "<nav class=\"ds-nav-pill\"><a class=\"ds-nav-link ds-nav-link-active\" href=\"#\">Home</a><a class=\"ds-nav-link\" href=\"#\">About</a><a class=\"ds-nav-link\" href=\"#\">Work</a></nav>",
+      "css": ".ds-nav-pill { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.375rem 0.5rem; background: #ffffff; border-radius: 9999px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05); } .ds-nav-link { padding: 0.5rem 1rem; font-family: Geist, Arial, Helvetica, sans-serif; font-size: 0.875rem; font-weight: 300; color: rgba(0,0,0,0.6); text-decoration: none; border-radius: 9999px; transition: background 0.2s ease, color 0.2s ease; } .ds-nav-link:hover { background: rgba(0,0,0,0.04); color: rgba(0,0,0,1); } .ds-nav-link-active { background: #111111; color: #ffffff; } .ds-nav-link-active:hover { background: #111111; color: #ffffff; }"
+    },
+    {
+      "name": "Project Tech Tag",
+      "kind": "chip",
+      "refersTo": null,
+      "description": "Technology label pill on project cards. Colors are per-tech brand color.",
+      "html": "<span class=\"ds-tech-tag\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"#61DAFB\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.5c-4.5 0-8.5 2.5-10.5 6.5 2 4 6 6.5 10.5 6.5s8.5-2.5 10.5-6.5c-2-4-6-6.5-10.5-6.5zm0 11.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z\"/></svg> React</span>",
+      "css": ".ds-tech-tag { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.625rem; border-radius: 9999px; font-family: Geist, Arial, Helvetica, sans-serif; font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.7); border: 1px solid rgba(97,218,251,0.15); background: rgba(97,218,251,0.035); cursor: default; transition: all 0.3s ease; } .ds-tech-tag:hover { border-color: rgba(97,218,251,0.3); background: rgba(97,218,251,0.08); transform: scale(1.05); } .ds-tech-tag svg { width: 0.875rem; height: 0.875rem; flex-shrink: 0; }"
+    },
+    {
+      "name": "Stat Card",
+      "kind": "card",
+      "refersTo": "stat-card",
+      "description": "Metric display card showing animated counter value.",
+      "html": "<div class=\"ds-stat-card\"><div class=\"ds-stat-value\">12+</div><div class=\"ds-stat-label\">Projects Delivered</div></div>",
+      "css": ".ds-stat-card { padding: 1.5rem 2rem; text-align: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 1rem; transition: border-color 0.3s ease, background 0.3s ease; } .ds-stat-card:hover { border-color: rgba(232,184,75,0.20); background: rgba(232,184,75,0.04); } .ds-stat-value { font-family: Geist, Arial, Helvetica, sans-serif; font-size: 2rem; font-weight: 700; color: #E8B84B; margin-bottom: 0.5rem; } .ds-stat-label { font-family: Geist Mono, monospace; font-size: 0.75rem; color: rgba(250,250,250,0.55); }"
+    },
+    {
+      "name": "Section Eyebrow",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Section intro label with accent divider line + monospace label + accent divider line.",
+      "html": "<div class=\"ds-eyebrow\"><span class=\"ds-eyebrow-line\"></span><span class=\"ds-eyebrow-label\">Capabilities</span><span class=\"ds-eyebrow-line\"></span></div>",
+      "css": ".ds-eyebrow { display: inline-flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; } .ds-eyebrow-line { width: 2rem; height: 1px; background: #E8B84B; } .ds-eyebrow-label { font-family: Geist Mono, monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: #E8B84B; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Studio Window",
+    "overview": "Every section is a framed exhibit of craft \u2014 precisely composed, meant to be studied. The viewer stands outside looking in at work that reveals its making. Nothing is off-the-shelf; every interaction, transition, and layout choice carries the maker's signature.\n\nThis system is Vibrant & Eclectic \u2014 not one palette, but a deliberate rotation. Gold anchors the About narrative, coral/emerald/sapphire own the project showcase, cyan/rose/violet drive expertise cards. Each section gets its own mood without losing coherence. The unifying thread is the dark canvas (#070708) that frames every exhibit, alternating with clean white (#fdfdfd) for breathing room.\n\nDesign IS the credential. The portfolio's own interface proves Saurabh's skill before a single project is read.",
+    "keyCharacteristics": [
+      "Framed vignettes \u2014 each section is a distinct visual set piece",
+      "Accent per section \u2014 color rotates to signal context shifts",
+      "Glass craftsmanship \u2014 subtle blur, border glow, and spotlight effects replace flat surfaces",
+      "Mono as meta voice \u2014 counters, labels, dates, tags in monospace for technical authority",
+      "Generous rhythm \u2014 wide horizontal padding, deep vertical sections, nothing cramped"
+    ],
+    "rules": [
+      { "name": "The Accent Per Section Rule", "body": "Color maps to section, not to role. Gold for About, coral/emerald/sapphire for projects, cyan/rose/violet for expertise. If a new section is added, it gets its own accent \u2014 never re-use another section's color.", "section": "colors" },
+      { "name": "The One Element Rule", "body": "Accent color occupies at most one visual element at a time within a viewport \u2014 an eyebrow label, a divider line, a highlight word. Never two simultaneously. Rarity is the point.", "section": "colors" },
+      { "name": "The Mono Meta Rule", "body": "Any text that labels, counts, dates, or categorizes uses Geist Mono. It's the system's 'technical annotation' voice \u2014 never body copy, never headlines, always secondary.", "section": "typography" },
+      { "name": "The Scale Gap Rule", "body": "No adjacent size steps. Skip from display to headline, headline to body. If a step is missing, the content doesn't need it. The 13x range from label (10px) to display (220px) is intentional \u2014 flat scales are monotonous.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "All surfaces are flat at rest. Shadows and glows appear only as responses to cursor interaction. A surface that's elevated at rest must justify itself \u2014 and most can't.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use section-specific accent palettes to signal context shifts \u2014 gold for narrative, coral/emerald/sapphire for projects, cyan/rose/violet for expertise.",
+      "Do use Geist Mono for all metadata \u2014 labels, counters, dates, tag names, stats.",
+      "Do keep accent color to one element per viewport. The rarity makes it powerful.",
+      "Do use generous spacing \u2014 wide horizontal padding (clamp 1.5rem to 7rem) and deep vertical sections (8rem) for editorial breathing room.",
+      "Do animate with easeOut exponential curves (cubic-bezier(0.16, 1, 0.3, 1) throughout the codebase).",
+      "Do use the dark canvas (#070708) as the primary container for craft-forward sections."
+    ],
+    "donts": [
+      "Don't repeat the same visual template across sections. Each section must earn its layout \u2014 no identical card grids.",
+      "Don't use gradient text (background-clip: text with gradient). The only exception is the 'Selected Works' headline \u2014 all other emphasis uses solid color, weight, or size.",
+      "Don't use glassmorphism as default. Glass effects are reserved for cards and badges; never decorate full sections with blur.",
+      "Don't build a 'hero-metric template' \u2014 big number + small label is only used for stat counters, never as the primary section layout.",
+      "Don't use side-stripe borders (border-left > 1px as accent). Use full borders, background tints, or divider lines instead.",
+      "Don't use em dashes. Use commas, colons, or periods.",
+      "Don't make the portfolio look like a generic dev template. If a section could come from a '10 modern portfolio templates' article, rewrite it."
+    ]
+  }
+}

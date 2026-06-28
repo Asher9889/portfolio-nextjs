@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 md:flex-row md:px-12">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-white font-serif text-sm font-bold italic">
-            Sk
+            SK
           </div>
           <span className="text-sm font-medium text-neutral-500">
             © 2026 Saurabh. All rights reserved.

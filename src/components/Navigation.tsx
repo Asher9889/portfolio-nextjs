@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Sun, Moon, Command } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 import clsx from "clsx";
 import ShinyText from './ShinyText';
 import BookCallDialog from "./BookCallDialog";
@@ -64,7 +64,7 @@ export default function Navigation() {
         {/* Center Nav Links (Pill) */}
         <div className="hidden md:flex items-center gap-1 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-black/5 rounded-full px-2 py-1.5">
           <div className="flex items-center gap-1 px-2">
-            {["Home", "About", "Work", "Blogs"].map((item, i) => (
+            {["Home", "About", "Work"].map((item, i) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -78,28 +78,7 @@ export default function Navigation() {
                 {item}
               </a>
             ))}
-            <a
-              href="#more"
-              className="px-4 py-2 text-sm font-light text-black/60 hover:text-black hover:bg-black/5 rounded-full flex items-center gap-1"
-            >
-              More
-              <svg
-                width="10"
-                height="10"
-                viewBox="0 0 10 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="opacity-50"
-              >
-                <path
-                  d="M2.5 3.5L5 6L7.5 3.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
+
           </div>
           <div className="h-5 w-px bg-black/10 mx-2"></div>
 
@@ -136,9 +115,7 @@ export default function Navigation() {
 
         {/* Right Actions */}
         <div className="flex items-center gap-3">
-          <button className="w-11 h-11 flex items-center justify-center bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-black/5 rounded-full hover:bg-gray-50 transition-colors text-black/70">
-            <Command size={18} />
-          </button>
+
         </div>
       </nav>
 

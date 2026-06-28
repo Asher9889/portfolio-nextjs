@@ -7,6 +7,7 @@ import {
     useTransform,
     useInView,
     AnimatePresence,
+    useReducedMotion,
 } from "framer-motion";
 import {
     Code2,
@@ -25,10 +26,6 @@ import {
     Globe,
     Database,
     Eye,
-    GitGraph as Github,
-    LucideChartColumnStacked as Linkedin,
-    GitGraph as Twitter,
-    Mail,
 } from "lucide-react";
 import { SiDocker, SiGit, SiGithub, SiMongodb, SiNginx, SiNodedotjs, SiNpm, SiPm2, SiReact, SiReactquery, SiRedis, SiRedux } from "react-icons/si";
 import ExpertiseSection from "./ExpertiseSection";
@@ -63,36 +60,7 @@ const A = {
 
 };
 
-// ─── Typewriter Hook ───
-function useTypewriter(texts: string[], speed = 80, delay = 2000) {
-    const [display, setDisplay] = useState("");
-    const [index, setIndex] = useState(0);
-    const [phase, setPhase] = useState<"typing" | "deleting" | "waiting">("typing");
 
-    useEffect(() => {
-        const text = texts[index];
-        let timer: NodeJS.Timeout;
-
-        if (phase === "typing") {
-            if (display.length < text.length) {
-                timer = setTimeout(() => setDisplay(text.slice(0, display.length + 1)), speed);
-            } else {
-                timer = setTimeout(() => setPhase("deleting"), delay);
-            }
-        } else if (phase === "deleting") {
-            if (display.length > 0) {
-                timer = setTimeout(() => setDisplay(display.slice(0, -1)), speed / 2);
-            } else {
-                setIndex((index + 1) % texts.length);
-                setPhase("typing");
-            }
-        }
-
-        return () => clearTimeout(timer);
-    }, [display, index, phase, texts, speed, delay]);
-
-    return display;
-}
 
 // ─── Orbiting Icons ───
 function OrbitRing({ radius, duration, children, reverse = false }: any) {
@@ -364,7 +332,7 @@ function PhilosophySection() {
                 >
                     <div className="h-px w-12" style={{ backgroundColor: A.gold }} />
                     <span className="text-sm font-mono" style={{ color: A.gold }}>
-            // my philosophy
+            my philosophy
                     </span>
                 </motion.div>
             </div>
@@ -428,11 +396,7 @@ function Stats() {
 function HeroSection() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
-    const typewriterText = useTypewriter(
-        ["Full Stack Developer", "AI Engineer", "Problem Solver", "Creative Technologist"],
-        90,
-        1800
-    );
+    const prefersReducedMotion = useReducedMotion();
 
     return (
         <div
@@ -444,8 +408,8 @@ function HeroSection() {
                 <div className="order-2 lg:order-1 space-y-6">
                     {/* Label */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
+                        animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
                         transition={{ duration: 0.6 }}
                         className="flex items-center gap-3"
                     >
@@ -460,37 +424,36 @@ function HeroSection() {
 
                     {/* Name */}
                     <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        initial={!prefersReducedMotion ? { opacity: 0, y: 30 } : undefined}
+                        animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
                         transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1]"
                     >
                         <span className="text-white">I build</span>
                         <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E8B84B] via-[#F0D78C] to-[#E8B84B]">
+                        <span style={{ color: A.gold }}>
                             intelligent
                         </span>
                         <br />
                         <span className="text-white">systems.</span>
                     </motion.h1>
 
-                    {/* Typewriter */}
+                    {/* Role */}
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={isInView ? { opacity: 1 } : {}}
+                        initial={!prefersReducedMotion ? { opacity: 0 } : undefined}
+                        animate={!prefersReducedMotion && isInView ? { opacity: 1 } : undefined}
                         transition={{ delay: 0.4 }}
                         className="h-8 flex items-center"
                     >
                         <span className="text-lg font-mono" style={{ color: A.cyan }}>
-                            {typewriterText}
-                            <span className="animate-pulse ml-0.5">|</span>
+                            Full Stack Developer &bull; AI Engineer &bull; Problem Solver
                         </span>
                     </motion.div>
 
                     {/* Description */}
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
+                        animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
                         transition={{ delay: 0.5, duration: 0.7 }}
                         className="text-base md:text-lg leading-relaxed max-w-lg"
                         style={{ color: A.text.secondary }}
@@ -504,8 +467,8 @@ function HeroSection() {
 
                     {/* CTA */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
+                        animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
                         transition={{ delay: 0.7, duration: 0.6 }}
                         className="flex flex-wrap items-center gap-4 pt-4"
                     >
@@ -530,48 +493,13 @@ function HeroSection() {
                         </a>
                     </motion.div>
 
-                    {/* Social Links */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={isInView ? { opacity: 1 } : {}}
-                        transition={{ delay: 0.9 }}
-                        className="flex items-center gap-3 pt-4"
-                    >
-                        {[
-                            { icon: Github, href: "#" },
-                            { icon: Linkedin, href: "#" },
-                            { icon: Twitter, href: "#" },
-                            { icon: Mail, href: "#" },
-                        ].map((social, i) => (
-                            <a
-                                key={i}
-                                href={social.href}
-                                className="flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 hover:scale-110"
-                                style={{
-                                    borderColor: "rgba(255,255,255,0.1)",
-                                    color: "rgba(255,255,255,0.4)",
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.borderColor = `${A.gold}50`;
-                                    e.currentTarget.style.color = A.gold;
-                                    e.currentTarget.style.backgroundColor = `${A.gold}10`;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                                    e.currentTarget.style.color = "rgba(255,255,255,0.4)";
-                                    e.currentTarget.style.backgroundColor = "transparent";
-                                }}
-                            >
-                                <social.icon className="h-4 w-4" />
-                            </a>
-                        ))}
-                    </motion.div>
+
                 </div>
 
                 {/* Right: Visual */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    initial={!prefersReducedMotion ? { opacity: 0, scale: 0.9 } : undefined}
+                    animate={!prefersReducedMotion && isInView ? { opacity: 1, scale: 1 } : undefined}
                     transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                     className="order-1 lg:order-2 flex items-center justify-center"
                 >
