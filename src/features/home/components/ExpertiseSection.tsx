@@ -35,8 +35,8 @@ import {
 
 // ─── Accent Palette ───
 const A = {
-    gold: "#D4A843",
-    goldGlow: "rgba(212, 168, 67, 0.15)",
+    gold: "#E8B84B",
+    goldGlow: "rgba(232, 184, 75, 0.15)",
     cyan: "#22D3EE",
     cyanGlow: "rgba(34, 211, 238, 0.12)",
     rose: "#FB7185",
@@ -44,7 +44,7 @@ const A = {
     violet: "#A78BFA",
     violetGlow: "rgba(167, 139, 250, 0.12)",
     emerald: "#10B981",
-    emeraldGlow: "rgba(16, 185, 129, 0.35)",
+    emeraldGlow: "rgba(16, 185, 129, 0.15)",
 };
 
 // ─── Skill Icons Map ───
@@ -656,7 +656,7 @@ export default function ExpertiseSection() {
                         animate={isInView ? { opacity: 1 } : {}}
                         transition={{ delay: 0.4, duration: 0.6 }}
                         className="text-base md:text-lg max-w-md mx-auto"
-                        style={{ color: "rgba(255,255,255,0.35)" }}
+                        style={{ color: "rgba(255,255,255,0.5)" }}
                     >
                         A fusion of engineering precision and creative intelligence.
                     </motion.p>

@@ -24,8 +24,8 @@
   --am-ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* ExpertiseSection specific */
-  --ex-gold: #D4A843;
-  --ex-gold-glow: rgba(212, 168, 67, 0.15);
+  --ex-gold: #E8B84B;
+  --ex-gold-glow: rgba(232, 184, 75, 0.15);
   --ex-cyan: #22D3EE;
   --ex-cyan-glow: rgba(34, 211, 238, 0.12);
   --ex-rose: #FB7185;

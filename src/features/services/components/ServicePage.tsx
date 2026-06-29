@@ -1,262 +1,166 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
-import {
-  Code2,
-  Brain,
-  Layers,
-  Zap,
-  ArrowUpRight,
-  Sparkles,
-  CheckCircle2,
-  Workflow,
-  Shield,
-  Gauge,
-  Palette,
-} from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, useInView, useReducedMotion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Check, Minus, Plus, Star } from "lucide-react";
 import Link from "next/link";
+import { outcomeGroups, comparisons, caseStudies, techStack, enterprisePractices, faqs, pricingTiers } from "@/constants/services.constant";
+import HeroDiagram from "./HeroDiagram";
+import ProcessTimeline from "./ProcessTimeline";
+import ArchitectureFlow from "./ArchitectureFlow";
 
-const easeOutExpo = [0.16, 1, 0.3, 1] as const;
+const easeOut = [0.16, 1, 0.3, 1] as const;
 
-const services = [
-  {
-    icon: Code2,
-    title: "Full Stack Engineering",
-    tagline: "Scalable platforms from concept to deployment",
-    description:
-      "End-to-end web applications built with React, Next.js, Node.js, and TypeScript. From REST APIs to real-time systems, I ship production-grade code that scales.",
-    highlights: [
-      "React & Next.js frontends",
-      "Node.js & Express APIs",
-      "MongoDB, Redis, PostgreSQL",
-      "Docker & PM2 deployment",
-    ],
-    color: "#22D3EE",
-    gradient: "from-cyan-500/20 via-cyan-400/5 to-transparent",
-  },
-  {
-    icon: Brain,
-    title: "AI & Machine Learning",
-    tagline: "Intelligent systems that see, read, and decide",
-    description:
-      "Computer vision, NLP, and deep learning solutions tailored to real-world problems. Face recognition, object detection, and predictive models for production.",
-    highlights: [
-      "Computer vision & YOLO",
-      "Face recognition pipelines",
-      "MediaPipe & OpenCV",
-      "Model deployment & MLOps",
-    ],
-    color: "#E8B84B",
-    gradient: "from-amber-500/20 via-amber-400/5 to-transparent",
-  },
-  {
-    icon: Layers,
-    title: "System Architecture",
-    tagline: "Distributed systems built for reliability",
-    description:
-      "Microservices, cloud infrastructure, and system design that handles real traffic. I architect for observability, resilience, and cost-efficiency.",
-    highlights: [
-      "Microservices & event-driven",
-      "AWS & GCP infrastructure",
-      "Kubernetes & CI/CD",
-      "System design & scaling",
-    ],
-    color: "#FB7185",
-    gradient: "from-rose-500/20 via-rose-400/5 to-transparent",
-  },
-  {
-    icon: Zap,
-    title: "Creative Development",
-    tagline: "Motion, 3D, and interactive experiences",
-    description:
-      "Award-worthy frontends with Framer Motion, Three.js, and WebGL. I bring designs to life with buttery animations, 3D visuals, and pixel-perfect interactions.",
-    highlights: [
-      "Framer Motion & GSAP",
-      "Three.js & WebGL",
-      "UI/UX & interaction design",
-      "Performance optimization",
-    ],
-    color: "#A78BFA",
-    gradient: "from-violet-500/20 via-violet-400/5 to-transparent",
-  },
-];
-
-const processSteps = [
-  {
-    step: "01",
-    title: "Discovery",
-    desc: "We map the problem space, define goals, and align on what success looks like. No assumptions, no scope creep.",
-    icon: Workflow,
-  },
-  {
-    step: "02",
-    title: "Architecture",
-    desc: "I design the system — data flow, service boundaries, tech stack, and fallbacks. Every decision has a rationale.",
-    icon: Shield,
-  },
-  {
-    step: "03",
-    title: "Build",
-    desc: "Iterative development with continuous feedback. Ship fast, validate, refine. No waterfall, no surprises.",
-    icon: Gauge,
-  },
-  {
-    step: "04",
-    title: "Launch & Iterate",
-    desc: "Deploy, monitor, optimize. Then keep improving based on real usage data and user feedback.",
-    icon: Palette,
-  },
-];
-
-function ServiceHero() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const prefersReducedMotion = useReducedMotion();
-
+function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <section
-      ref={ref}
-      className="relative min-h-[90vh] flex items-center overflow-hidden"
-      style={{ backgroundColor: "#070708" }}
-    >
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute top-1/4 -left-40 w-[500px] h-[500px] rounded-full blur-[200px]"
-          style={{ backgroundColor: "#22D3EE", opacity: 0.04 }}
-        />
-        <div
-          className="absolute bottom-1/4 -right-40 w-[600px] h-[600px] rounded-full blur-[200px]"
-          style={{ backgroundColor: "#E8B84B", opacity: 0.03 }}
-        />
-      </div>
-
-      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 xl:px-28 pt-32 pb-20">
-        <div className="max-w-4xl">
-          <motion.div
-            initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
-            animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-3 mb-6"
-          >
-            <div className="h-px w-8" style={{ backgroundColor: "#E8B84B" }} />
-            <span
-              className="text-xs font-mono uppercase tracking-[0.25em]"
-              style={{ color: "#E8B84B" }}
-            >
-              What I Offer
-            </span>
-          </motion.div>
-
-          <motion.h1
-            initial={!prefersReducedMotion ? { opacity: 0, y: 30 } : undefined}
-            animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
-            transition={{ delay: 0.1, duration: 0.8, ease: easeOutExpo }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-6"
-          >
-            <span style={{ color: "#FAFAFA" }}>Services that</span>
-            <br />
-            <span style={{ color: "#E8B84B" }}>ship value</span>
-            <br />
-            <span style={{ color: "#FAFAFA" }}>not just code.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
-            animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
-            transition={{ delay: 0.3, duration: 0.7 }}
-            className="text-lg md:text-xl max-w-2xl mb-10"
-            style={{ color: "rgba(250, 250, 250, 0.55)" }}
-          >
-            Every engagement is a partnership. I don&apos;t just write code — I
-            architect systems, design experiences, and ship products that move
-            the needle. Here&apos;s how I can help.
-          </motion.p>
-
-          <motion.div
-            initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
-            animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="flex flex-wrap gap-4"
-          >
-            <Link
-              href="#services"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-black transition-all duration-300 hover:scale-105"
-              style={{ backgroundColor: "#E8B84B" }}
-            >
-              Explore Services
-              <ArrowUpRight size={16} />
-            </Link>
-            <Link
-              href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border transition-all duration-300 hover:bg-white/5"
-              style={{
-                borderColor: "rgba(255,255,255,0.15)",
-                color: "rgba(255,255,255,0.7)",
-              }}
-            >
-              Book a Call
-            </Link>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+    <div className="flex items-center gap-3 mb-6">
+      <div className="h-px w-6 bg-w-border" />
+      <span className="text-[11px] font-inter uppercase tracking-[0.2em] text-w-muted">{children}</span>
+    </div>
   );
 }
 
-function ServicesGrid() {
+function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
+  return (
+    <motion.div
+      ref={ref}
+      initial={!prefersReducedMotion ? { opacity: 0, y: 24 } : undefined}
+      animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
+      transition={{ delay, duration: 0.7, ease: easeOut }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function ScaleIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
+  return (
+    <motion.div
+      ref={ref}
+      initial={!prefersReducedMotion ? { opacity: 0, scale: 0.95 } : undefined}
+      animate={!prefersReducedMotion && isInView ? { opacity: 1, scale: 1 } : undefined}
+      transition={{ delay, duration: 0.7, ease: easeOut }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ── 1. Hero ── */
+
+function HeroSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section
-      id="services"
-      ref={ref}
-      className="relative py-32 md:py-40 overflow-hidden"
-      style={{ backgroundColor: "#070708" }}
-    >
-      <div className="px-6 md:px-12 lg:px-20 xl:px-28 max-w-7xl mx-auto">
-        <motion.div
-          initial={!prefersReducedMotion ? { opacity: 0, y: 30 } : undefined}
-          animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.8, ease: easeOutExpo }}
-          className="mb-20"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className="h-px w-8"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent, #E8B84B)",
-              }}
-            />
-            <span
-              className="text-xs font-mono uppercase tracking-[0.3em]"
-              style={{ color: "#E8B84B" }}
-            >
-              Capabilities
-            </span>
-          </div>
-          <h2
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl"
-            style={{ color: "#FAFAFA" }}
+    <section ref={ref} className="bg-w-bg pt-28 pb-16 md:pt-36 md:pb-20">
+      <div className="mx-auto max-w-[1200px] px-6">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <motion.div
+            initial={!prefersReducedMotion ? { opacity: 0, x: -30 } : undefined}
+            animate={!prefersReducedMotion && isInView ? { opacity: 1, x: 0 } : undefined}
+            transition={{ duration: 0.8, ease: easeOut }}
           >
-            Everything you need to
-            <br />
-            <span style={{ color: "#E8B84B" }}>build, scale, and ship</span>.
-          </h2>
-        </motion.div>
+            <SectionLabel>Engineering</SectionLabel>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-inter font-bold tracking-tight leading-[0.95] text-w-text mb-6">
+              Software That Moves
+              <br />
+              <span className="text-w-blue">Your Business Forward</span>.
+            </h1>
+            <p className="text-sm md:text-base text-w-muted leading-relaxed max-w-lg mb-8">
+              I design, build, and scale digital products that help businesses automate operations, improve customer experience, and unlock new revenue. Fifteen years of shipping production software.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="#outcomes"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-bg bg-w-text transition-all duration-200 hover:opacity-85"
+                style={{ borderRadius: "4px" }}
+              >
+                See What I Build <ArrowUpRight size={14} />
+              </Link>
+              <Link
+                href="#pricing"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-text border border-w-border transition-all duration-200 hover:border-w-text"
+                style={{ borderRadius: "4px" }}
+              >
+                View Pricing
+              </Link>
+            </div>
+          </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-5 md:gap-6">
-          {services.map((service, i) => (
-            <ServiceCard
-              key={service.title}
-              service={service}
-              index={i}
-              isInView={isInView}
-              prefersReducedMotion={prefersReducedMotion}
-            />
+          <motion.div
+            initial={!prefersReducedMotion ? { opacity: 0, scale: 0.92 } : undefined}
+            animate={!prefersReducedMotion && isInView ? { opacity: 1, scale: 1 } : undefined}
+            transition={{ delay: 0.2, duration: 0.9, ease: easeOut }}
+          >
+            <HeroDiagram />
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── 2. Outcomes ── */
+
+function OutcomesSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <section id="outcomes" ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
+      <div className="mx-auto max-w-[1200px] px-6">
+        <FadeIn className="mb-16 max-w-2xl">
+          <SectionLabel>What I Solve</SectionLabel>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
+            You have a business problem.
+            <br />
+            <span className="text-w-blue">I build the technical solution.</span>
+          </h2>
+        </FadeIn>
+
+        <div className="space-y-10 md:space-y-14">
+          {outcomeGroups.map((group, gi) => (
+            <motion.div
+              key={group.id}
+              initial={!prefersReducedMotion ? { opacity: 0, y: 30 } : undefined}
+              animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
+              transition={{ delay: 0.1 * gi, duration: 0.7, ease: easeOut }}
+              className="border border-w-border p-6 md:p-8"
+              style={{ borderRadius: "8px" }}
+            >
+              <h3 className="text-xl md:text-2xl font-inter font-bold text-w-text mb-3">
+                {group.headline}
+              </h3>
+              <p className="text-sm text-w-muted leading-relaxed mb-6 max-w-2xl">
+                {group.question}
+              </p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+                {group.items.map((item) => (
+                  <div
+                    key={item.label}
+                    className="p-3 border border-w-border hover:border-w-blue/30 transition-colors"
+                    style={{ borderRadius: "4px" }}
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <Check size={10} className="text-w-blue/60 shrink-0" />
+                      <span className="text-xs font-inter font-semibold text-w-text">{item.label}</span>
+                    </div>
+                    <p className="text-[11px] text-w-muted leading-relaxed pl-[18px]">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -264,116 +168,106 @@ function ServicesGrid() {
   );
 }
 
-function ServiceCard({
-  service,
-  index,
-  isInView,
-  prefersReducedMotion,
-}: {
-  service: (typeof services)[0];
-  index: number;
-  isInView: boolean;
-  prefersReducedMotion: boolean | null;
-}) {
+/* ── 3. Case Studies ── */
+
+function CaseStudiesSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
   return (
-    <motion.div
-      initial={!prefersReducedMotion ? { opacity: 0, y: 50 } : undefined}
-      animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
-      transition={{
-        delay: 0.15 * index,
-        duration: 0.9,
-        ease: easeOutExpo,
-      }}
-      className="group relative rounded-3xl border overflow-hidden transition-all duration-500"
-      style={{
-        borderColor: "rgba(255,255,255,0.06)",
-      }}
-    >
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-        style={{
-          background: `radial-gradient(800px circle at 50% -20%, ${service.color}12, transparent 60%)`,
-        }}
-      />
+    <section ref={ref} className="py-20 md:py-28 bg-w-smoke border-t border-w-border">
+      <div className="mx-auto max-w-[1200px] px-6">
+        <FadeIn className="mb-16 max-w-2xl">
+          <SectionLabel>Recent Work</SectionLabel>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
+            Results, not promises.
+            <br />
+            <span className="text-w-blue">Here is proof.</span>
+          </h2>
+        </FadeIn>
 
-      <div
-        className="absolute inset-0 rounded-3xl transition-opacity duration-500 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(165deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.005) 100%)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-        }}
-      />
-
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: `linear-gradient(90deg, transparent, ${service.color}50, transparent)`,
-        }}
-      />
-
-      <div className="relative z-10 p-8 md:p-10">
-        <div className="flex items-start justify-between mb-6">
-          <div
-            className="flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-500"
-            style={{
-              borderColor: `${service.color}30`,
-              backgroundColor: `${service.color}10`,
-            }}
-          >
-            <service.icon
-              className="h-6 w-6"
-              style={{ color: service.color }}
-            />
-          </div>
-          <span
-            className="text-[10px] font-mono uppercase tracking-widest"
-            style={{ color: "rgba(250, 250, 250, 0.25)" }}
-          >
-            {String(index + 1).padStart(2, "0")}
-          </span>
-        </div>
-
-        <h3
-          className="text-2xl md:text-3xl font-bold tracking-tight mb-2"
-          style={{ color: "#FAFAFA" }}
-        >
-          {service.title}
-        </h3>
-        <p
-          className="text-sm mb-5 font-medium"
-          style={{ color: `${service.color}cc` }}
-        >
-          {service.tagline}
-        </p>
-        <p
-          className="text-sm md:text-base leading-relaxed mb-8 max-w-lg"
-          style={{ color: "rgba(250, 250, 250, 0.5)" }}
-        >
-          {service.description}
-        </p>
-
-        <div className="flex flex-wrap gap-2">
-          {service.highlights.map((h) => (
-            <span
-              key={h}
-              className="inline-flex items-center gap-1.5 text-[11px] font-medium px-3 py-1.5 rounded-lg border transition-all duration-300"
-              style={{
-                borderColor: "rgba(255,255,255,0.06)",
-                color: "rgba(255,255,255,0.45)",
-                backgroundColor: "rgba(255,255,255,0.03)",
-              }}
+        <div className="space-y-5">
+          {caseStudies.map((cs, i) => (
+            <motion.div
+              key={cs.id}
+              initial={!prefersReducedMotion ? { opacity: 0, y: 30 } : undefined}
+              animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
+              transition={{ delay: 0.15 * i, duration: 0.7, ease: easeOut }}
             >
-              <CheckCircle2 size={10} style={{ color: service.color }} />
-              {h}
-            </span>
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="w-full flex items-center justify-between p-5 md:p-6 border border-w-border bg-w-bg text-left transition-all duration-200 hover:border-w-text/30"
+                style={{ borderRadius: "8px" }}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-center w-10 h-10 border border-w-border bg-w-smoke shrink-0" style={{ borderRadius: "4px" }}>
+                    <Star size={14} className="text-w-muted" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm md:text-base font-inter font-bold text-w-text">{cs.title}</h3>
+                    <p className="text-xs text-w-muted mt-0.5">Case study</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="hidden sm:inline text-xs text-w-blue font-medium">{openIndex === i ? "Collapse" : "View details"}</span>
+                  {openIndex === i ? <Minus size={14} className="text-w-muted shrink-0" /> : <Plus size={14} className="text-w-muted shrink-0" />}
+                </div>
+              </button>
+
+              <AnimatePresence>
+                {openIndex === i && (
+                  <motion.div
+                    initial={!prefersReducedMotion ? { height: 0, opacity: 0 } : undefined}
+                    animate={!prefersReducedMotion ? { height: "auto", opacity: 1 } : undefined}
+                    exit={!prefersReducedMotion ? { height: 0, opacity: 0 } : undefined}
+                    transition={{ duration: 0.4, ease: easeOut }}
+                    className="overflow-hidden"
+                  >
+                    <div className="p-6 md:p-8 border-x border-b border-w-border bg-w-bg" style={{ borderRadius: "0 0 8px 8px" }}>
+                      <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+                        <div className="space-y-5">
+                          <div>
+                            <span className="text-[10px] font-inter font-medium text-w-blue uppercase tracking-wider">Problem</span>
+                            <p className="text-sm text-w-muted mt-1 leading-relaxed">{cs.problem}</p>
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-inter font-medium text-w-blue uppercase tracking-wider">Challenges</span>
+                            <p className="text-sm text-w-muted mt-1 leading-relaxed">{cs.challenges}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-5">
+                          <div>
+                            <span className="text-[10px] font-inter font-medium text-w-blue uppercase tracking-wider">Architecture</span>
+                            <p className="text-sm text-w-muted mt-1 leading-relaxed">{cs.architecture}</p>
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-inter font-medium text-w-blue uppercase tracking-wider">Outcome</span>
+                            <p className="text-sm text-w-muted mt-1 leading-relaxed">{cs.result}</p>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {cs.metrics.map((m) => (
+                              <span key={m} className="text-[11px] font-inter font-medium text-w-blue bg-w-blue/[0.04] px-2.5 py-1 border border-w-blue/20" style={{ borderRadius: "4px" }}>
+                                {m}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
         </div>
       </div>
-    </motion.div>
+    </section>
   );
 }
+
+/* ── 4. Process ── */
 
 function ProcessSection() {
   const ref = useRef(null);
@@ -381,103 +275,82 @@ function ProcessSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section
-      ref={ref}
-      className="relative py-32 md:py-40 overflow-hidden"
-      style={{ backgroundColor: "#070708" }}
-    >
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute top-0 left-1/3 w-[400px] h-[400px] rounded-full blur-[180px]"
-          style={{
-            background: "radial-gradient(circle, rgba(167,139,250,0.08), transparent)",
-          }}
-        />
-      </div>
-
-      <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-28 max-w-7xl mx-auto">
+    <section ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
+      <div className="mx-auto max-w-[1200px] px-6">
         <motion.div
-          initial={!prefersReducedMotion ? { opacity: 0, y: 30 } : undefined}
+          initial={!prefersReducedMotion ? { opacity: 0, y: 24 } : undefined}
           animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.8, ease: easeOutExpo }}
-          className="mb-20"
+          transition={{ duration: 0.7, ease: easeOut }}
+          className="mb-12 max-w-2xl"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className="h-px w-8"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent, #A78BFA)",
-              }}
-            />
-            <span
-              className="text-xs font-mono uppercase tracking-[0.3em]"
-              style={{ color: "#A78BFA" }}
-            >
-              Process
-            </span>
-          </div>
-          <h2
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl"
-            style={{ color: "#FAFAFA" }}
-          >
-            How I deliver
+          <SectionLabel>How I Work</SectionLabel>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
+            A process designed for
             <br />
-            <span style={{ color: "#A78BFA" }}>results, not just code</span>.
+            <span className="text-w-blue">predictability, not heroics</span>.
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-4 gap-6 md:gap-8">
-          {processSteps.map((step, i) => (
+        <ScaleIn>
+          <ProcessTimeline />
+        </ScaleIn>
+      </div>
+    </section>
+  );
+}
+
+/* ── 5. Comparison ── */
+
+function ComparisonSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <section ref={ref} className="py-20 md:py-28 bg-w-smoke border-t border-w-border">
+      <div className="mx-auto max-w-[1200px] px-6">
+        <FadeIn className="mb-12 max-w-2xl">
+          <SectionLabel>Why Choose Me</SectionLabel>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
+            Not all development is the same.
+            <br />
+            <span className="text-w-blue">Here is what you actually get.</span>
+          </h2>
+        </FadeIn>
+
+        <div className="grid md:grid-cols-2 gap-0 border border-w-border overflow-hidden" style={{ borderRadius: "8px" }}>
+          {/* Typical header */}
+          <div className="p-5 bg-w-bg border-r border-b border-w-border">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-rose-300" />
+              <span className="text-xs font-inter font-bold text-w-muted uppercase tracking-wider">Typical Agency</span>
+            </div>
+          </div>
+          <div className="p-5 bg-w-bg border-b border-w-border">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-w-blue" />
+              <span className="text-xs font-inter font-bold text-w-text uppercase tracking-wider">This Is What I Do</span>
+            </div>
+          </div>
+
+          {/* Rows */}
+          {comparisons.map((item, i) => (
             <motion.div
-              key={step.step}
-              initial={
-                !prefersReducedMotion
-                  ? { opacity: 0, y: 40 }
-                  : undefined
-              }
-              animate={
-                !prefersReducedMotion && isInView
-                  ? { opacity: 1, y: 0 }
-                  : undefined
-              }
-              transition={{
-                delay: 0.2 * i,
-                duration: 0.7,
-                ease: easeOutExpo,
-              }}
-              className="relative"
+              key={item.label}
+              initial={!prefersReducedMotion ? { opacity: 0, y: 10 } : undefined}
+              animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
+              transition={{ delay: 0.04 * i, duration: 0.4, ease: easeOut }}
+              className="contents"
             >
-              <span
-                className="text-5xl md:text-6xl font-black tracking-tighter block mb-4"
-                style={{ color: "rgba(250, 250, 250, 0.04)" }}
-              >
-                {step.step}
-              </span>
-              <div
-                className="flex h-10 w-10 items-center justify-center rounded-xl border mb-5"
-                style={{
-                  borderColor: "rgba(167, 139, 250, 0.25)",
-                  backgroundColor: "rgba(167, 139, 250, 0.08)",
-                }}
-              >
-                <step.icon
-                  className="h-5 w-5"
-                  style={{ color: "#A78BFA" }}
-                />
+              <div className={`p-4 border-r border-b border-w-border ${i % 2 === 0 ? "bg-w-bg" : "bg-w-smoke/50"}`}>
+                <p className="text-xs font-inter text-w-muted line-through">{item.typical}</p>
               </div>
-              <h3
-                className="text-lg font-bold mb-2"
-                style={{ color: "#FAFAFA" }}
-              >
-                {step.title}
-              </h3>
-              <p
-                className="text-sm leading-relaxed"
-                style={{ color: "rgba(250, 250, 250, 0.45)" }}
-              >
-                {step.desc}
-              </p>
+              <div className={`p-4 border-b border-w-border ${i % 2 === 0 ? "bg-w-bg" : "bg-w-smoke/50"}`}>
+                <div className="flex items-start gap-2">
+                  <Check size={12} className="text-w-blue/70 mt-0.5 shrink-0" />
+                  <p className="text-xs font-inter text-w-text">{item.our}</p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -486,117 +359,259 @@ function ProcessSection() {
   );
 }
 
+/* ── 6. Architecture Preview ── */
+
+function ArchitectureSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <section ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
+      <div className="mx-auto max-w-[1200px] px-6">
+        <motion.div
+          initial={!prefersReducedMotion ? { opacity: 0, y: 24 } : undefined}
+          animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 0.7, ease: easeOut }}
+          className="mb-12 max-w-2xl"
+        >
+          <SectionLabel>How I Think Before I Code</SectionLabel>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text mb-4">
+            I plan the whole system
+            <br />
+            <span className="text-w-blue">before writing a single line</span>.
+          </h2>
+          <p className="text-sm text-w-muted leading-relaxed max-w-lg">
+            Every project starts with a whiteboard. Data flows, service boundaries, failure modes, scaling strategy.
+            The code is just the last step.
+          </p>
+        </motion.div>
+
+        <ScaleIn delay={0.2}>
+          <ArchitectureFlow />
+        </ScaleIn>
+      </div>
+    </section>
+  );
+}
+
+/* ── 7. Pricing ── */
+
+function PricingSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <section id="pricing" ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
+      <div className="mx-auto max-w-[1200px] px-6">
+        <FadeIn className="mb-12 max-w-2xl">
+          <SectionLabel>Investment</SectionLabel>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
+            Transparent pricing.
+            <br />
+            <span className="text-w-blue">No hidden costs, no surprises.</span>
+          </h2>
+        </FadeIn>
+
+        <div className="grid md:grid-cols-3 gap-5">
+          {pricingTiers.map((tier, i) => (
+            <motion.div
+              key={tier.name}
+              initial={!prefersReducedMotion ? { opacity: 0, y: 24 } : undefined}
+              animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
+              transition={{ delay: 0.1 * i, duration: 0.6, ease: easeOut }}
+              className={`relative flex flex-col border transition-all duration-300 ${tier.highlighted ? "border-w-text shadow-sm" : "border-w-border hover:border-w-text/30"} bg-w-bg`}
+              style={{ borderRadius: "8px" }}
+            >
+              {tier.highlighted && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-w-text" style={{ borderRadius: "4px" }}>
+                  <span className="text-[10px] font-inter font-bold text-w-bg uppercase tracking-wider">Most Popular</span>
+                </div>
+              )}
+              <div className="p-6 md:p-7 flex flex-col h-full">
+                <h3 className="text-sm font-inter font-bold text-w-text mb-1">{tier.name}</h3>
+                <p className="text-2xl md:text-3xl font-inter font-bold text-w-text mb-3 tracking-tight">{tier.price}</p>
+                <p className="text-xs text-w-muted leading-relaxed mb-6 flex-1">{tier.description}</p>
+                <ul className="space-y-2.5 mb-6">
+                  {tier.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-xs text-w-muted">
+                      <Check size={10} className="text-w-blue/60 mt-0.5 shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="#contact"
+                  className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-inter font-medium transition-all duration-200 ${tier.highlighted ? "text-w-bg bg-w-text hover:opacity-85" : "text-w-text border border-w-border hover:border-w-text"} text-center`}
+                  style={{ borderRadius: "4px" }}
+                >
+                  {tier.price === "Custom Quote" ? "Let's Talk" : "Get Started"}
+                  <ArrowUpRight size={12} />
+                </Link>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── 8. Tech & Practices ── */
+
+function TechSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <section ref={ref} className="py-20 md:py-28 bg-w-smoke border-t border-w-border">
+      <div className="mx-auto max-w-[1200px] px-6">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-16">
+          <FadeIn>
+            <SectionLabel>Built With</SectionLabel>
+            <h2 className="text-2xl md:text-3xl font-inter font-bold tracking-tight text-w-text mb-6">
+              Modern tools for real-world systems.
+            </h2>
+            <div className="space-y-5">
+              {techStack.map((cat) => (
+                <div key={cat.category}>
+                  <span className="text-[10px] font-inter font-medium text-w-muted/60 uppercase tracking-wider block mb-2">{cat.category}</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {cat.items.map((t) => (
+                      <span key={t} className="text-[11px] font-inter text-w-muted bg-w-bg px-2.5 py-1 border border-w-border" style={{ borderRadius: "4px" }}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.15}>
+            <SectionLabel>Enterprise Practices</SectionLabel>
+            <h2 className="text-2xl md:text-3xl font-inter font-bold tracking-tight text-w-text mb-6">
+              Production-grade from day one.
+            </h2>
+            <ul className="space-y-3">
+              {enterprisePractices.map((p) => (
+                <li key={p} className="flex items-center gap-3 text-sm text-w-muted">
+                  <span className="w-5 h-5 flex items-center justify-center border border-w-blue/30 bg-w-blue/[0.03]" style={{ borderRadius: "4px" }}>
+                    <Check size={10} className="text-w-blue/60" />
+                  </span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── 9. FAQ ── */
+
+function FAQSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+
+  return (
+    <section ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
+      <div className="mx-auto max-w-[1200px] px-6">
+        <FadeIn className="mb-12 max-w-2xl">
+          <SectionLabel>Questions You Might Have</SectionLabel>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
+            I prefer honest answers
+            <br />
+            <span className="text-w-blue">over sales scripts.</span>
+          </h2>
+        </FadeIn>
+
+        <div className="max-w-3xl space-y-2">
+          {faqs.map((faq, i) => (
+            <motion.div
+              key={i}
+              initial={!prefersReducedMotion ? { opacity: 0, y: 10 } : undefined}
+              animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
+              transition={{ delay: 0.04 * i, duration: 0.4, ease: easeOut }}
+              className="border border-w-border overflow-hidden"
+              style={{ borderRadius: "4px" }}
+            >
+              <button
+                onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
+                className="w-full flex items-center justify-between p-4 text-left bg-w-bg hover:bg-w-smoke/50 transition-colors"
+              >
+                <span className="text-sm font-inter font-medium text-w-text">{faq.question}</span>
+                {openFAQ === i ? <Minus size={12} className="text-w-muted shrink-0" /> : <Plus size={12} className="text-w-muted shrink-0" />}
+              </button>
+              <AnimatePresence>
+                {openFAQ === i && (
+                  <motion.div
+                    initial={!prefersReducedMotion ? { height: 0, opacity: 0 } : undefined}
+                    animate={!prefersReducedMotion ? { height: "auto", opacity: 1 } : undefined}
+                    exit={!prefersReducedMotion ? { height: 0, opacity: 0 } : undefined}
+                    transition={{ duration: 0.3, ease: easeOut }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-4 pb-4 bg-w-bg">
+                      <p className="text-xs text-w-muted leading-relaxed">{faq.answer}</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── 10. CTA ── */
+
 function CTASection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section
-      ref={ref}
-      className="relative py-32 md:py-40 overflow-hidden"
-      style={{ backgroundColor: "#070708" }}
-    >
-      <div className="px-6 md:px-12 lg:px-20 xl:px-28 max-w-7xl mx-auto">
+    <section ref={ref} className="py-24 md:py-32 bg-w-text border-t border-w-border">
+      <div className="mx-auto max-w-[1200px] px-6">
         <motion.div
-          initial={!prefersReducedMotion ? { opacity: 0, y: 40 } : undefined}
+          initial={!prefersReducedMotion ? { opacity: 0, y: 24 } : undefined}
           animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.8 }}
-          className="relative max-w-4xl mx-auto text-center rounded-3xl border p-12 md:p-16 overflow-hidden"
-          style={{
-            backgroundColor: "rgba(255,255,255,0.02)",
-            borderColor: "rgba(255,255,255,0.06)",
-          }}
+          transition={{ duration: 0.8, ease: easeOut }}
+          className="max-w-2xl"
         >
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[120px] pointer-events-none"
-            style={{ backgroundColor: "#E8B84B", opacity: 0.08 }}
-          />
-
-          <div className="relative z-10 flex flex-col items-center gap-6">
-            <motion.div
-              initial={
-                !prefersReducedMotion
-                  ? { opacity: 0, scale: 0.5 }
-                  : undefined
-              }
-              animate={
-                !prefersReducedMotion && isInView
-                  ? { opacity: 1, scale: 1 }
-                  : undefined
-              }
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center justify-center h-14 w-14 rounded-full border"
-              style={{
-                borderColor: "rgba(232, 184, 75, 0.19)",
-                backgroundColor: "rgba(232, 184, 75, 0.08)",
-              }}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-bg mb-6">
+            Have a Product Idea?
+          </h2>
+          <p className="text-sm md:text-base leading-relaxed mb-8 max-w-lg" style={{ color: "rgba(255,255,255,0.55)" }}>
+            Let&apos;s spend 30 minutes discussing whether it&apos;s technically and commercially viable.
+            <br />
+            <span style={{ color: "rgba(255,255,255,0.7)" }}>No sales pitch. Just honest engineering advice.</span>
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="#contact"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-text bg-w-bg transition-all duration-200 hover:opacity-85"
+              style={{ borderRadius: "4px" }}
             >
-              <Sparkles className="h-6 w-6" style={{ color: "#E8B84B" }} />
-            </motion.div>
-
-            <motion.h2
-              initial={
-                !prefersReducedMotion
-                  ? { opacity: 0, y: 20 }
-                  : undefined
-              }
-              animate={
-                !prefersReducedMotion && isInView
-                  ? { opacity: 1, y: 0 }
-                  : undefined
-              }
-              transition={{ delay: 0.3 }}
-              className="text-3xl md:text-5xl font-bold tracking-tight"
-              style={{ color: "#FAFAFA" }}
+              Book a Free 30-Min Call
+              <ArrowUpRight size={14} />
+            </Link>
+            <Link
+              href="#pricing"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-bg border border-white/20 transition-all duration-200 hover:border-white/40"
+              style={{ borderRadius: "4px" }}
             >
-              Ready to build something
-              <br />
-              <span style={{ color: "#E8B84B" }}>extraordinary</span>?
-            </motion.h2>
-
-            <motion.p
-              initial={
-                !prefersReducedMotion ? { opacity: 0 } : undefined
-              }
-              animate={
-                !prefersReducedMotion && isInView
-                  ? { opacity: 1 }
-                  : undefined
-              }
-              transition={{ delay: 0.5 }}
-              className="text-base md:text-lg max-w-lg mx-auto"
-              style={{ color: "rgba(250, 250, 250, 0.5)" }}
-            >
-              Whether you need a full platform, an AI model, or a creative
-              frontend — let&apos;s talk about what you want to build.
-            </motion.p>
-
-            <motion.div
-              initial={
-                !prefersReducedMotion
-                  ? { opacity: 0, y: 20 }
-                  : undefined
-              }
-              animate={
-                !prefersReducedMotion && isInView
-                  ? { opacity: 1, y: 0 }
-                  : undefined
-              }
-              transition={{ delay: 0.7 }}
-            >
-              <Link
-                href="#contact"
-                className="group inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold text-black transition-all duration-300 hover:scale-105"
-                style={{
-                  backgroundColor: "#E8B84B",
-                  boxShadow: "0 0 40px rgba(232, 184, 75, 0.2)",
-                }}
-              >
-                Start a Conversation
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-            </motion.div>
+              See Pricing
+            </Link>
           </div>
         </motion.div>
       </div>
@@ -604,12 +619,20 @@ function CTASection() {
   );
 }
 
+/* ── Main ── */
+
 export default function ServicePage() {
   return (
-    <main style={{ backgroundColor: "#070708" }}>
-      <ServiceHero />
-      <ServicesGrid />
+    <main className="bg-w-bg font-inter">
+      <HeroSection />
+      <OutcomesSection />
+      <CaseStudiesSection />
       <ProcessSection />
+      <ComparisonSection />
+      <ArchitectureSection />
+      <PricingSection />
+      <TechSection />
+      <FAQSection />
       <CTASection />
     </main>
   );

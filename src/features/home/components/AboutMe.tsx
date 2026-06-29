@@ -374,7 +374,7 @@ function HeroSection() {
                     </motion.div>
 
                     {/* Name */}
-                    <motion.h1
+                    <motion.h2
                         initial={!prefersReducedMotion ? { opacity: 0, y: 30 } : undefined}
                         animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
                         transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -387,7 +387,7 @@ function HeroSection() {
                         </span>
                         <br />
                         <span className="am-text-white">systems.</span>
-                    </motion.h1>
+                    </motion.h2>
 
                     {/* Role */}
                     <motion.div

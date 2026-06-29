@@ -276,8 +276,11 @@ function OrbitRingSVG({ radius, opacity, dashArray }: OrbitRing) {
 
 function ConnectionLines({ nodes, hoveredNode }: { nodes: TechNode[]; hoveredNode: string | null }) {
   const [lines, setLines] = useState<Array<{ x1: number; y1: number; x2: number; y2: number; opacity: number }>>([]);
+  const frameCountRef = useRef(0);
 
   useAnimationFrame((time) => {
+    frameCountRef.current++;
+    if (frameCountRef.current % 4 !== 0) return;
     const newLines: typeof lines = [];
     
     nodes.forEach((nodeA, i) => {
@@ -440,8 +443,13 @@ export default function OrbitalTechStack() {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
+  const frameCountRef = useRef(0);
+
   useAnimationFrame((t) => {
-    setTime(t);
+    frameCountRef.current++;
+    if (frameCountRef.current % 4 === 0) {
+      setTime(t);
+    }
   });
 
   const handleHover = useCallback((id: string) => setHoveredNode(id), []);

@@ -95,7 +95,7 @@ export default function BookCallDialog({
       <div className="relative w-full max-w-5xl overflow-hidden rounded-[2rem] border border-black/10 bg-[#f8f5ef] text-black shadow-[0_30px_80px_rgba(0,0,0,0.18)]">
         <div className="grid gap-0 lg:grid-cols-[1.05fr_1fr]">
           <aside className="relative overflow-hidden bg-[#121212] px-6 py-7 text-white sm:px-8 sm:py-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.14),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(117,255,169,0.18),transparent_30%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.14),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(232,184,75,0.18),transparent_30%)]" />
             <div className="relative flex h-full flex-col justify-between gap-10">
               <div className="flex items-center justify-between">
                 <div className="text-sm font-medium uppercase tracking-[0.28em] text-white/60">Book a call</div>
@@ -117,7 +117,7 @@ export default function BookCallDialog({
 
               <div className="grid gap-3 text-sm text-white/72 sm:grid-cols-3 sm:gap-4">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <PhoneCall size={18} className="mb-3 text-[#9dffca]" />
+                  <PhoneCall size={18} className="mb-3 text-[#E8B84B]" />
                   Discovery call
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">

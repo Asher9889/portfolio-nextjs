@@ -6,11 +6,30 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-playfair);
+  --font-inter: var(--font-inter);
+
+  --color-w-bg: #ffffff;
+  --color-w-text: #080808;
+  --color-w-muted: #5a5a5a;
+  --color-w-border: #d8d8d8;
+  --color-w-blue: #146ef5;
+  --color-w-green: #60ed76;
+  --color-w-orange: #ffa666;
+  --color-w-smoke: #f5f5f5;
+
+  --radius-w-sm: 4px;
+  --radius-w-md: 8px;
+  --radius-w-lg: 12px;
 }
 
 :root {
   --background: #fdfdfd;
   --foreground: #111111;
+}
+
+.dark {
+  --background: #070708;
+  --foreground: #fafafa;
 }
 
 body {
@@ -28,8 +47,3 @@ body {
     scroll-behavior: auto !important;
   }
 }
-
-
-
-
-

@@ -202,7 +202,7 @@ function SectionHeader() {
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white">
             Selected
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/40">
+            <span className="text-white/80">
               Works
             </span>
           </h2>
@@ -235,7 +235,7 @@ function TechTag({ tech, index, accent }: { tech: Tech; index: number; accent: s
       initial={!prefersReducedMotion ? { opacity: 0, y: 10 } : undefined}
       animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
       transition={{ delay: 0.1 * index, duration: 0.4 }}
-      className="group/tag relative flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-300 hover:scale-105 cursor-default"
+      className="group/tag relative flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-300 hover:scale-105 cursor-default focus-visible:outline-2 focus-visible:outline-offset-2"
       style={{
         borderColor: `${tech.color}25`,
         backgroundColor: `${tech.color}08`,
@@ -248,6 +248,8 @@ function TechTag({ tech, index, accent }: { tech: Tech; index: number; accent: s
         e.currentTarget.style.borderColor = `${tech.color}25`;
         e.currentTarget.style.backgroundColor = `${tech.color}08`;
       }}
+      tabIndex={0}
+      role="listitem"
     >
       <Icon
         className="h-3.5 w-3.5 transition-transform duration-300 group-hover/tag:scale-110"
@@ -320,6 +322,9 @@ function ProjectCard({
             ? `0 0 80px ${project.accentSoft}, 0 25px 60px rgba(0,0,0,0.5)`
             : "0 8px 40px rgba(0,0,0,0.3)",
         }}
+        onFocus={() => setIsHovered(true)}
+        onBlur={() => setIsHovered(false)}
+        tabIndex={0}
       >
         {/* Spotlight Gradient */}
         <div

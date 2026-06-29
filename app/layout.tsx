@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import Navigation from "@/components/Navigation";
@@ -21,6 +21,12 @@ const playfair = Playfair_Display({
   style: ["normal", "italic"],
 });
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Saurabh Kushwaha - Full Stack Engineer",
   description: myInfo.description,
@@ -31,7 +37,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
         {/* <script

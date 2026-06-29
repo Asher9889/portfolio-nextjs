@@ -23,6 +23,7 @@ export default function Video({ src, poster }: { src?: string; poster?: string }
       loop
       playsInline
       poster={poster}
+      preload="none"
       onError={() => setError(true)}
     >
       <source src={src} type="video/webm" />

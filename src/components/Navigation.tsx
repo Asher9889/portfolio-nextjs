@@ -64,20 +64,20 @@ export default function Navigation() {
         <motion.div
           className="flex items-center gap-4"
           whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          transition={{ duration: 0.3, ease: easeOutExpo }}
         >
           <div className="font-serif italic font-bold text-3xl tracking-tighter">
             SK
           </div>
-          <div className="h-6 w-px bg-black/10 hidden md:block"></div>
+          <div className="h-6 w-px bg-foreground/10 hidden md:block"></div>
           <div className="hidden md:flex flex-col text-[10px] font-bold tracking-wider uppercase">
-            <span className="text-black/50 font-medium">Creative Engineer</span>
-            <span className="text-green-500 font-medium">Building The Future</span>
+            <span className="text-foreground/50 font-medium">Creative Engineer</span>
+            <span className="font-medium" style={{ color: "#E8553A" }}>Building The Future</span>
           </div>
         </motion.div>
 
         {/* Center Nav Links (Pill) */}
-        <div className="hidden md:flex items-center gap-1 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-black/5 rounded-full px-2 py-1.5">
+        <div className="hidden md:flex items-center gap-1 bg-background shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-foreground/5 rounded-full px-2 py-1.5">
           <div className="flex items-center gap-1 px-2">
             {headerMenu.map((item, i) => (
               <motion.a
@@ -86,19 +86,20 @@ export default function Navigation() {
                 className={clsx(
                   "px-4 py-2 text-sm font-light rounded-full transition-colors",
                   i === 0
-                    ? "bg-[#111111] text-white"
-                    : "text-black/60 hover:text-black hover:bg-black/5"
+                    ? "text-white"
+                    : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
                 )}
+                style={i === 0 ? { backgroundColor: "#111111" } : undefined}
                 whileHover={prefersReducedMotion ? {} : { scale: 1.06 }}
                 whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                transition={{ duration: 0.3, ease: easeOutExpo }}
               >
                 {item}
               </motion.a>
             ))}
           </div>
 
-          <div className="h-5 w-px bg-black/10 mx-2"></div>
+          <div className="h-5 w-px bg-foreground/10 mx-2"></div>
 
           <div className="flex items-center gap-4 px-2">
             <motion.button
@@ -106,10 +107,21 @@ export default function Navigation() {
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
               aria-pressed={theme === "dark"}
-              className="w-10 h-10 flex items-center justify-center rounded-full border border-blue-500 text-blue-500 hover:bg-blue-50 transition-colors cursor-pointer dark:hover:bg-blue-500/10"
+              className="w-10 h-10 flex items-center justify-center rounded-full transition-colors cursor-pointer"
+              style={{
+                border: "1px solid",
+                borderColor: "#E8B84B",
+                color: "#E8B84B",
+              }}
               whileHover={prefersReducedMotion ? {} : { scale: 1.1 }}
               whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              transition={{ duration: 0.3, ease: easeOutExpo }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(232,184,75,0.08)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "";
+              }}
             >
               <motion.span
                 animate={prefersReducedMotion ? {} : { rotate: theme === "dark" ? 180 : 0 }}
@@ -123,10 +135,13 @@ export default function Navigation() {
             <motion.button
               type="button"
               onClick={() => setBookingOpen(true)}
-              className="hidden md:block px-6 py-2.5 bg-[#222222] text-white text-sm font-medium rounded-full hover:bg-black transition-colors cursor-pointer"
+              className="hidden md:block px-6 py-2.5 text-white text-sm font-medium rounded-full transition-colors cursor-pointer"
+              style={{ backgroundColor: "#222222" }}
               whileHover={prefersReducedMotion ? {} : { scale: 1.04 }}
               whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              transition={{ duration: 0.3, ease: easeOutExpo }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "#000"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "#222222"; }}
             >
               <ShinyText
                 text="✨ Book a Call"
@@ -143,7 +158,6 @@ export default function Navigation() {
           </div>
         </div>
 
-        {/* Right Actions */}
         <div className="flex items-center gap-3" />
       </motion.nav>
 

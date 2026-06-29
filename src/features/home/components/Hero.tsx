@@ -26,8 +26,6 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 px-4 overflow-hidden">
-      {/* Background subtle elements can go here if needed */}
-
       <motion.div
         variants={!prefersReducedMotion ? containerVariants : undefined}
         initial={!prefersReducedMotion ? "hidden" : undefined}
@@ -41,9 +39,9 @@ export default function Hero() {
             href="https://wa.me/9889840089"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex items-center gap-2 px-5 py-2.5 bg-white rounded-full shadow-[0_2px_15px_rgba(0,0,0,0.06)] border border-black/5 hover:shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300"
+            className="group relative flex items-center gap-2 px-5 py-2.5 bg-background rounded-full shadow-[0_2px_15px_rgba(0,0,0,0.06)] border border-foreground/5 hover:shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300"
           >
-            <span className="text-sm font-light text-black/80">
+            <span className="text-sm font-light text-foreground/80">
               Say hi on  
             </span>
             <Image
@@ -68,14 +66,18 @@ export default function Hero() {
                 strokeLinejoin="round"
               />
             </svg>
-            {/* Gradient underline */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-0.5 rounded-full bg-linear-to-r from-blue-500 via-purple-500 to-orange-500 opacity-80" />
+            <div
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-0.5 rounded-full opacity-70"
+              style={{
+                background: "linear-gradient(90deg, #E8B84B, #E8553A)",
+              }}
+            />
           </a>
         </motion.div>
 
         {/* Main Name */}
         <motion.div variants={itemVariants} className="w-full text-center mb-8">
-          <h1 className="text-[12vw] md:text-[180px] lg:text-[220px] leading-[0.8] font-black tracking-tighter text-[#111] uppercase selection:bg-black selection:text-white">
+          <h1 className="text-[12vw] md:text-[180px] lg:text-[220px] leading-[0.8] font-black tracking-tighter text-foreground uppercase selection:bg-foreground selection:text-background">
             SAURABH
           </h1>
         </motion.div>
@@ -85,10 +87,10 @@ export default function Hero() {
           variants={itemVariants}
           className="flex flex-col items-center text-center space-y-4 md:space-y-6 mt-4"
         >
-          <p className="text-sm md:text-lg lg:text-xl tracking-[0.3em] font-medium text-black/60 uppercase">
+          <p className="text-sm md:text-lg lg:text-xl tracking-[0.3em] font-medium text-foreground/60 uppercase">
             I design and build products that
           </p>
-          <h2 className="text-4xl md:text-6xl lg:text-[80px] font-serif italic text-black tracking-tight leading-tight">
+          <h2 className="text-4xl md:text-6xl lg:text-[80px] font-serif italic text-foreground tracking-tight leading-tight">
             deliver real impact.
           </h2>
         </motion.div>
@@ -101,30 +103,29 @@ export default function Hero() {
         transition={{ delay: 1.2, duration: 1 }}
         className="absolute bottom-8 left-0 right-0 px-8 md:px-16 flex justify-between items-end w-full max-w-350 mx-auto"
       >
-        {/* Left: Location */}
         <div className="flex flex-col items-start gap-2">
-          <MapPin size={24} className="text-green-500 stroke-[1.5]" />
-          <div className="text-sm md:text-base font-bold text-black uppercase tracking-wide">
-            BASED IN KANPUR & NOIDA,
+          <MapPin size={24} className="stroke-[1.5]" style={{ color: "#E8B84B" }} />
+          <div className="text-sm md:text-base font-bold text-foreground uppercase tracking-wide">
+            BASED IN KANPUR &amp; NOIDA,
             <br />
-            <span className="text-black/40 font-medium">INDIA</span>
+            <span className="text-foreground/40 font-medium">INDIA</span>
           </div>
         </div>
 
-        {/* Right: Role */}
         <div className="flex flex-col items-end gap-2 text-right">
-          <Layers size={24} className="text-blue-500 stroke-[1.5]" />
-          <div className="text-sm md:text-base font-bold text-black uppercase tracking-wide">
+          <Layers size={24} className="stroke-[1.5]" style={{ color: "#E8B84B" }} />
+          <div className="text-sm md:text-base font-bold text-foreground uppercase tracking-wide">
             FULL STACK DEV,
             <br />
-            <span className="text-black/40 font-medium">& Mobile Developer</span>
+            <span className="text-foreground/40 font-medium">&amp; Mobile Developer</span>
           </div>
         </div>
       </motion.div>
 
        <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
-        backgroundSize: '60px 60px'
+        backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
+        backgroundSize: '60px 60px',
+        color: 'var(--foreground)'
       }} />
     </section>
   );
