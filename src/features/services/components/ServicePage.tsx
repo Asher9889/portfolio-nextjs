@@ -82,14 +82,14 @@ function HeroSection() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="#outcomes"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-bg bg-w-text transition-all duration-200 hover:opacity-85"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-bg bg-w-text transition-all duration-200 hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50"
                 style={{ borderRadius: "4px" }}
               >
                 See What I Build <ArrowUpRight size={14} />
               </Link>
               <Link
                 href="#pricing"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-text border border-w-border transition-all duration-200 hover:border-w-text"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-text border border-w-border transition-all duration-200 hover:border-w-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50"
                 style={{ borderRadius: "4px" }}
               >
                 View Pricing
@@ -198,7 +198,7 @@ function CaseStudiesSection() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between p-5 md:p-6 border border-w-border bg-w-bg text-left transition-all duration-200 hover:border-w-text/30"
+                className="w-full flex items-center justify-between p-5 md:p-6 border border-w-border bg-w-bg text-left transition-all duration-200 hover:border-w-text/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50"
                 style={{ borderRadius: "8px" }}
               >
                 <div className="flex items-center gap-4">
@@ -318,7 +318,7 @@ function ComparisonSection() {
           </h2>
         </FadeIn>
 
-        <div className="grid md:grid-cols-2 gap-0 border border-w-border overflow-hidden" style={{ borderRadius: "8px" }}>
+          <div className="grid md:grid-cols-2 gap-0 border border-w-border overflow-hidden" style={{ borderRadius: "8px" }}>
           {/* Typical header */}
           <div className="p-5 bg-w-bg border-r border-b border-w-border">
             <div className="flex items-center gap-2">
@@ -335,23 +335,27 @@ function ComparisonSection() {
 
           {/* Rows */}
           {comparisons.map((item, i) => (
-            <motion.div
-              key={item.label}
-              initial={!prefersReducedMotion ? { opacity: 0, y: 10 } : undefined}
-              animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
-              transition={{ delay: 0.04 * i, duration: 0.4, ease: easeOut }}
-              className="contents"
-            >
-              <div className={`p-4 border-r border-b border-w-border ${i % 2 === 0 ? "bg-w-bg" : "bg-w-smoke/50"}`}>
+            <div key={item.label} className="contents">
+              <motion.div
+                initial={!prefersReducedMotion ? { opacity: 0, y: 10 } : undefined}
+                animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
+                transition={{ delay: 0.04 * i, duration: 0.4, ease: easeOut }}
+                className={`p-4 border-r border-b border-w-border ${i % 2 === 0 ? "bg-w-bg" : "bg-w-smoke/50"}`}
+              >
                 <p className="text-xs font-inter text-w-muted line-through">{item.typical}</p>
-              </div>
-              <div className={`p-4 border-b border-w-border ${i % 2 === 0 ? "bg-w-bg" : "bg-w-smoke/50"}`}>
+              </motion.div>
+              <motion.div
+                initial={!prefersReducedMotion ? { opacity: 0, y: 10 } : undefined}
+                animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
+                transition={{ delay: 0.04 * i, duration: 0.4, ease: easeOut }}
+                className={`p-4 border-b border-w-border ${i % 2 === 0 ? "bg-w-bg" : "bg-w-smoke/50"}`}
+              >
                 <div className="flex items-start gap-2">
                   <Check size={12} className="text-w-blue/70 mt-0.5 shrink-0" />
                   <p className="text-xs font-inter text-w-text">{item.our}</p>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -381,7 +385,7 @@ function ArchitectureSection() {
             <br />
             <span className="text-w-blue">before writing a single line</span>.
           </h2>
-          <p className="text-sm text-w-muted leading-relaxed max-w-lg">
+          <p className="text-sm text-w-muted leading-relaxed max-w-xl">
             Every project starts with a whiteboard. Data flows, service boundaries, failure modes, scaling strategy.
             The code is just the last step.
           </p>
@@ -443,7 +447,7 @@ function PricingSection() {
                 </ul>
                 <Link
                   href="#contact"
-                  className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-inter font-medium transition-all duration-200 ${tier.highlighted ? "text-w-bg bg-w-text hover:opacity-85" : "text-w-text border border-w-border hover:border-w-text"} text-center`}
+                  className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-inter font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50 ${tier.highlighted ? "text-w-bg bg-w-text hover:opacity-85" : "text-w-text border border-w-border hover:border-w-text"} text-center`}
                   style={{ borderRadius: "4px" }}
                 >
                   {tier.price === "Custom Quote" ? "Let's Talk" : "Get Started"}
@@ -461,12 +465,8 @@ function PricingSection() {
 /* ── 8. Tech & Practices ── */
 
 function TechSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const prefersReducedMotion = useReducedMotion();
-
   return (
-    <section ref={ref} className="py-20 md:py-28 bg-w-smoke border-t border-w-border">
+    <section className="py-20 md:py-28 bg-w-smoke border-t border-w-border">
       <div className="mx-auto max-w-[1200px] px-6">
         <div className="grid md:grid-cols-2 gap-10 md:gap-16">
           <FadeIn>
@@ -544,7 +544,7 @@ function FAQSection() {
             >
               <button
                 onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
-                className="w-full flex items-center justify-between p-4 text-left bg-w-bg hover:bg-w-smoke/50 transition-colors"
+                className="w-full flex items-center justify-between p-4 text-left bg-w-bg hover:bg-w-smoke/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50"
               >
                 <span className="text-sm font-inter font-medium text-w-text">{faq.question}</span>
                 {openFAQ === i ? <Minus size={12} className="text-w-muted shrink-0" /> : <Plus size={12} className="text-w-muted shrink-0" />}
@@ -599,7 +599,7 @@ function CTASection() {
           <div className="flex flex-wrap gap-3">
             <Link
               href="#contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-text bg-w-bg transition-all duration-200 hover:opacity-85"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-text bg-w-bg transition-all duration-200 hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
               style={{ borderRadius: "4px" }}
             >
               Book a Free 30-Min Call
@@ -607,7 +607,7 @@ function CTASection() {
             </Link>
             <Link
               href="#pricing"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-bg border border-white/20 transition-all duration-200 hover:border-white/40"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-bg border border-white/20 transition-all duration-200 hover:border-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
               style={{ borderRadius: "4px" }}
             >
               See Pricing

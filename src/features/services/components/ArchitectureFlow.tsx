@@ -95,8 +95,6 @@ export default function ArchitectureFlow() {
   const prefersReducedMotion = useReducedMotion();
   const particles = useParticles();
 
-  const nodeHeights = archNodes.map((n) => n.y);
-
   return (
     <div
       ref={ref}
@@ -113,10 +111,10 @@ export default function ArchitectureFlow() {
           const y2 = `${next.y - 4}%`;
           return (
             <g key={node.id}>
-              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#d8d8d8" strokeWidth="1" opacity="0.4" />
+              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-w-border)" strokeWidth="1" opacity="0.4" />
               <line
                 x1={x1} y1={y1} x2={x2} y2={y2}
-                stroke="#146ef5" strokeWidth="1.5" opacity="0.15"
+                stroke="var(--color-w-blue)" strokeWidth="1.5" opacity="0.15"
                 strokeDasharray="4 3"
               >
                 <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="2s" repeatCount="indefinite" />
@@ -139,7 +137,7 @@ export default function ArchitectureFlow() {
               cx={`${px}%`}
               cy={`${py}%`}
               r="2.5"
-              fill="#146ef5"
+              fill="var(--color-w-blue)"
               opacity={0.6}
             >
               <animate

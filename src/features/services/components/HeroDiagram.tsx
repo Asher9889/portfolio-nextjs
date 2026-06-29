@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface Node {
   id: string;
@@ -44,18 +44,18 @@ function AnimatedLine({
 
   return (
     <g>
-      <path d={d} fill="none" stroke="#d8d8d8" strokeWidth="1" opacity="0.3" />
+      <path d={d} fill="none" stroke="var(--color-w-border)" strokeWidth="1" opacity="0.3" />
       <path
         d={d}
         fill="none"
-        stroke="#146ef5"
+        stroke="var(--color-w-blue)"
         strokeWidth="1.5"
         opacity={isActive ? 0.7 : 0.2}
         strokeDasharray="6 4"
         strokeDashoffset={-progress * 100}
         style={{ transition: "opacity 0.4s" }}
       />
-      <circle r="2" fill="#146ef5" opacity={isActive ? 0.8 : 0.3}>
+      <circle r="2" fill="var(--color-w-blue)" opacity={isActive ? 0.8 : 0.3}>
         <animateMotion dur="3s" repeatCount="indefinite" path={d} />
       </circle>
     </g>
@@ -96,7 +96,9 @@ function FloatingCard({
     const dx = (mouseX - cx) / rect.width;
     const dy = (mouseY - cy) / rect.height;
     const strength = 8;
-    setPos({ x: dx * strength * (node.x / 50 - 1), y: dy * strength * (node.y / 50 - 1) });
+    const xFactor = (node.x - 50) / 50;
+    const yFactor = (node.y - 50) / 50;
+    setPos({ x: dx * strength * xFactor, y: dy * strength * yFactor });
   }, [mouseX, mouseY, containerRef, node.x, node.y]);
 
   const left = `calc(${node.x}% - ${size.w / 2}px)`;
@@ -109,11 +111,11 @@ function FloatingCard({
       onMouseLeave={onLeave}
       animate={{ x: pos.x, y: pos.y }}
       transition={{ type: "spring", stiffness: 80, damping: 15, mass: 0.5 }}
-      className="absolute z-10 flex items-center gap-2 px-3 py-2 bg-w-bg border transition-all duration-300 cursor-default select-none"
+      className={`absolute z-10 flex items-center gap-2 px-3 py-2 bg-w-bg border transition-all duration-300 cursor-default select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50`}
       style={{
         left, top,
         borderRadius: "6px",
-        borderColor: isActive ? "#146ef5" : "#d8d8d8",
+        borderColor: isActive ? "var(--color-w-blue)" : "var(--color-w-border)",
         boxShadow: isActive ? "0 0 0 1px rgba(20,110,245,0.15), 0 4px 12px rgba(0,0,0,0.04)" : "0 2px 6px rgba(0,0,0,0.03)",
       }}
     >
