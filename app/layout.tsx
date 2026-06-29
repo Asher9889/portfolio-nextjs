@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import Navigation from "@/components/Navigation";
+import { myInfo } from "@/constants/home.constant";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +23,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Saurabh Kushwaha - Full Stack Engineer",
-  description: "Saurabh Kushwaha is a passionate Full Stack Engineer specializing in React, Next.js, and Node.js. With a strong background in building scalable web applications, Saurabh combines technical expertise with a creative approach to solve complex problems. Dedicated to continuous learning and innovation, Saurabh is committed to delivering high-quality solutions that drive business success.",
+  description: myInfo.description,
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
@@ -67,7 +68,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="min-h-full flex flex-col">
-          <Navigation />
+          {/* <Navigation /> */}
         {children}
         </body>
     </html>

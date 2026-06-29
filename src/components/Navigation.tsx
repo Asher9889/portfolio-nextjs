@@ -7,6 +7,7 @@ import clsx from "clsx";
 import ShinyText from './ShinyText';
 import BookCallDialog from "./BookCallDialog";
 import { useNavbarVisibility } from "@/hooks/useNavbarVisibility";
+import { headerMenu } from "@/constants/home.constant";
 
 const THEME_KEY = "portfolio-theme";
 type Theme = "light" | "dark";
@@ -78,10 +79,10 @@ export default function Navigation() {
         {/* Center Nav Links (Pill) */}
         <div className="hidden md:flex items-center gap-1 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-black/5 rounded-full px-2 py-1.5">
           <div className="flex items-center gap-1 px-2">
-            {["Home", "About", "Work"].map((item, i) => (
+            {headerMenu.map((item, i) => (
               <motion.a
                 key={item}
-                href={`#${item.toLowerCase()}`}
+                href={`/${item.toLowerCase()}`}
                 className={clsx(
                   "px-4 py-2 text-sm font-light rounded-full transition-colors",
                   i === 0

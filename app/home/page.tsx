@@ -3,10 +3,12 @@ import ProjectShowcase from "@/features/home/components/ProjectShowcase";
 import AboutMe from "@/features/home/components/AboutMe";
 import Contact from "@/features/home/components/Contact";
 import Footer from "@/features/home/components/Footer";
+import Navigation from "@/components/Navigation";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-background text-foreground relative">
+      <Navigation />
       <Hero />
       <ProjectShowcase />
       <AboutMe />

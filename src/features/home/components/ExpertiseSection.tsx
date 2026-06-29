@@ -29,6 +29,8 @@ import {
     Type,
     BarChart3,
     Flame,
+    Boxes,
+    Smartphone,
 } from "lucide-react";
 
 // ─── Accent Palette ───
@@ -41,6 +43,8 @@ const A = {
     roseGlow: "rgba(251, 113, 133, 0.12)",
     violet: "#A78BFA",
     violetGlow: "rgba(167, 139, 250, 0.12)",
+    emerald: "#10B981",
+    emeraldGlow: "rgba(16, 185, 129, 0.35)",
 };
 
 // ─── Skill Icons Map ───
@@ -384,41 +388,186 @@ export default function ExpertiseSection() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-    const expertise = [
-        {
-            icon: Code2,
-            title: "Full Stack Engineering",
-            subtitle: "Modern web · APIs · Databases · Scalability",
-            skills: ["React", "Next.js", "Node.js", "Express.js", "TypeScript", "MongoDB", "BullMQ", "Redis", "Docker", "PM2",],
-            color: A.cyan,
-            colorGlow: A.cyanGlow,
-        },
-        {
-            icon: Brain,
-            title: "AI & Machine Learning",
-            subtitle: "Neural networks · Computer vision · NLP",
-            skills: ["MediaPipe", "NumPy", "OpenCV", "YOLO", "Insightface", "SCRFD", "ArcFace"],
-            color: A.gold,
-            colorGlow: A.goldGlow,
-        },
-        {
-            icon: Layers,
-            title: "System Architecture",
-            subtitle: "Cloud · Microservices · DevOps",
-            skills: ["Microservices", "AWS", "GCP", "Kubernetes", "CI/CD", "System Design", "Scalability"],
-            color: A.rose,
-            colorGlow: A.roseGlow,
-        },
-        {
-            icon: Zap,
-            title: "Creative Development",
-            subtitle: "Motion · 3D · Interactive",
-            skills: ["Framer Motion", "GSAP", "Three.js", "WebGL", "D3.js", "UI/UX", "Animation"],
-            color: A.violet,
-            colorGlow: A.violetGlow,
-        },
-    ];
+    // const expertise = [
+    //     {
+    //         icon: Code2,
+    //         title: "Full Stack Engineering",
+    //         subtitle: "Modern web · APIs · Databases · Scalability",
+    //         skills: ["TypeScript", "JavaScript", "Node.js", "Express.js", "MongoDB", "REST API", "BullMQ", "Redis", "Docker", "PM2", "React", "Next.js", "TanStack Query", "React Hook Form", "Zod", "Shadcn UI", "Redux Toolkit", "Zustand"],
+    //         color: A.cyan,
+    //         colorGlow: A.cyanGlow,
+    //     },
+    //     {
+    //         icon: Layers,
+    //         title: "System Architecture",
+    //         subtitle: "Scalable Systems · Cloud · DevOps",
+    //         skills: [
+    //             "System Design",
+    //             "Scalability",
+    //             "High Availability",
+    //             "Load Balancing",
+    //             "Caching",
+    //             "Microservices",
+    //             "Message Queues",
+    //             "CI/CD",
+    //             "Docker",
+    //             "AWS"
+    //         ],
+    //         color: A.rose,
+    //         colorGlow: A.roseGlow,
+    //     },
+    //     // {
+    //     //     icon: Brain,
+    //     //     title: "Artificial Intelligence",
+    //     //     subtitle: "Neural networks · Computer vision · NLP",
+    //     //     skills: ["MediaPipe", "NumPy", "OpenCV", "YOLO", "Insightface", "SCRFD", "ArcFace"],
+    //     //     color: A.gold,
+    //     //     colorGlow: A.goldGlow,
+    //     // },
+    //     {
+    //         icon: Zap,
+    //         title: "Performance",
+    //         subtitle: "Optimization · Caching · Rendering",
+    //         skills: [
+    //             "Code Splitting",
+    //             "Lazy Loading",
+    //             "Memoization",
+    //             "Bundle Optimization",
+    //             "Image Optimization",
+    //             "Caching",
+    //             "Core Web Vitals"
+    //         ],
+    //         color: A.violet,
+    //         colorGlow: A.violetGlow,
+    //     },
+    //     {
+    //         icon: Layers,
+    //         title: "Mobile Development",
+    //         subtitle: "Cross-Platform · Native Integration",
+    //         skills: [
+    //             "React Native",
+    //             "Expo",
+    //             "React Navigation",
+    //             "NativeWind",
+    //             "AsyncStorage",
+    //             "TanStack Query",
+    //             "Axios",
+    //             "REST API Integration",
+    //             "Authentication",
+    //             "Push Notifications",
+    //             "Deep Linking",
+    //             "Performance Optimization"
+    //         ],
+    //         color: A.gold,
+    //         colorGlow: A.goldGlow,
+    //     },
 
+
+    // ];
+
+
+    const expertise = [
+    {
+        icon: Code2,
+        title: "Full Stack Engineering",
+        subtitle: "Modern Web · APIs · Databases",
+        skills: [
+            "TypeScript",
+            "JavaScript",
+            "React",
+            "Next.js",
+            "Node.js",
+            "Express.js",
+            "MongoDB",
+            "REST APIs",
+            "TanStack Query",
+            "Redux Toolkit",
+            "React Hook Form",
+            "Zod",
+            "Shadcn UI"
+        ],
+        color: A.cyan,
+        colorGlow: A.cyanGlow,
+    },
+
+    {
+        icon: Layers,
+        title: "System Architecture",
+        subtitle: "Scalable Systems · Backend · DevOps",
+        skills: [
+            "System Design",
+            "Microservices",
+            "Scalability",
+            "High Availability",
+            "Redis",
+            "BullMQ",
+            "Load Balancing",
+            "Caching",
+            "Docker",
+            "PM2",
+            "CI/CD"
+        ],
+        color: A.rose,
+        colorGlow: A.roseGlow,
+    },
+
+    {
+        icon: Zap,
+        title: "Performance Engineering",
+        subtitle: "Optimization · Rendering · UX",
+        skills: [
+            "Code Splitting",
+            "Lazy Loading",
+            "Rendering Optimization",
+            "Bundle Optimization",
+            "Image Optimization",
+            "Core Web Vitals",
+            "Memoization"
+        ],
+        color: A.violet,
+        colorGlow: A.violetGlow,
+    },
+
+    {
+        icon: Smartphone,
+        title: "Mobile Development",
+        subtitle: "Cross-Platform · Native Apps",
+        skills: [
+            "React Native",
+            "Expo",
+            "React Navigation",
+            "NativeWind",
+            "AsyncStorage",
+            "REST API Integration",
+            "Authentication",
+            "TanStack Query",
+            "Axios",
+            "Performance Optimization"
+        ],
+        color: A.gold,
+        colorGlow: A.goldGlow,
+    },
+
+    {
+        icon: Boxes,
+        title: "Engineering Practices",
+        subtitle: "Architecture · Quality · Maintainability",
+        skills: [
+            "Component Architecture",
+            "Design Patterns",
+            "SOLID Principles",
+            "Reusable Components",
+            "State Management",
+            "Error Handling",
+            "Clean Code",
+            "Git",
+            "GitHub",
+            "Agile Development"
+        ],
+        color: A.emerald,
+        colorGlow: A.emeraldGlow,
+    },
+];
     return (
         <section
             ref={ref}
