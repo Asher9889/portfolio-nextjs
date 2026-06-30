@@ -82,12 +82,13 @@ export interface Milestone {
 }
 
 export const milestones: Milestone[] = [
-  { step: "01", title: "Strategy Workshop", deliverables: "Problem definition, user research, competitive analysis, technical feasibility assessment", timeline: "2-3 days", involvement: "Stakeholder interviews, join the discovery sessions" },
-  { step: "02", title: "Wireframes", deliverables: "User flows, wireframes, tech stack recommendation, architecture sketch", timeline: "3-5 days", involvement: "Review and approve user flows, sign off on tech stack" },
-  { step: "03", title: "Rapid Prototype", deliverables: "Clickable prototype, data model, API design, deployment plan", timeline: "5-7 days", involvement: "Test the prototype, provide feedback on interactions" },
-  { step: "04", title: "Development Sprint", deliverables: "Working software every week, automated tests, documentation, CI/CD pipeline", timeline: "2-6 weeks", involvement: "Weekly demo, prioritize backlog, test in staging" },
+  { step: "00", title: "Your Idea", deliverables: "Your vision, your requirements, your constraints. This is where we start.", timeline: "Day 1", involvement: "Share your idea, goals, and any existing materials" },
+  { step: "01", title: "Strategy Workshop", deliverables: "Problem definition, user research, competitive analysis, technical feasibility assessment", timeline: "2-3 days", involvement: "Join discovery sessions, share domain knowledge" },
+  { step: "02", title: "Wireframes", deliverables: "User flows, wireframes, tech stack recommendation, architecture sketch", timeline: "3-5 days", involvement: "Review flows, sign off on approach" },
+  { step: "03", title: "Rapid Prototype", deliverables: "Clickable prototype, data model, API design, deployment plan", timeline: "5-7 days", involvement: "Test the prototype, provide interaction feedback" },
+  { step: "04", title: "Development Sprint", deliverables: "Working software every week, automated tests, CI/CD pipeline, documentation", timeline: "2-6 weeks", involvement: "Weekly demo, prioritize backlog, test in staging" },
   { step: "05", title: "QA & Launch", deliverables: "Staging environment, load testing, security audit, rollback plan, launch runbook", timeline: "3-5 days", involvement: "Final UAT, content migration, launch day coordination" },
-  { step: "06", title: "Growth Partner", deliverables: "Monitoring, performance reports, feature roadmap, ongoing optimization", timeline: "Ongoing", involvement: "Monthly reviews, prioritise next cycle, share user feedback" },
+  { step: "06", title: "Growth Partner", deliverables: "Monitoring, performance reports, feature roadmap, ongoing optimization", timeline: "Ongoing", involvement: "Monthly reviews, set priorities, share user feedback" },
 ];
 
 export interface ComparisonItem {

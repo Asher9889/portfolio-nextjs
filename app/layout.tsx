@@ -74,7 +74,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="min-h-full flex flex-col">
-          {/* <Navigation /> */}
+          <Navigation />
         {children}
         </body>
     </html>

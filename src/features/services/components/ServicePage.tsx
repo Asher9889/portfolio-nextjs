@@ -61,46 +61,63 @@ function HeroSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const prefersReducedMotion = useReducedMotion();
 
+  const container = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 24 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easeOut } },
+  };
+
   return (
     <section ref={ref} className="bg-w-bg pt-28 pb-16 md:pt-36 md:pb-20">
       <div className="mx-auto max-w-[1200px] px-6">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div
-            initial={!prefersReducedMotion ? { opacity: 0, x: -30 } : undefined}
-            animate={!prefersReducedMotion && isInView ? { opacity: 1, x: 0 } : undefined}
-            transition={{ duration: 0.8, ease: easeOut }}
+            variants={!prefersReducedMotion ? container : undefined}
+            initial="hidden"
+            animate={!prefersReducedMotion && isInView ? "show" : undefined}
           >
-            <SectionLabel>Engineering</SectionLabel>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-inter font-bold tracking-tight leading-[0.95] text-w-text mb-6">
+            <motion.h1
+              variants={item}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-inter font-bold tracking-tighter leading-[0.92] text-w-text mb-6"
+            >
               Software That Moves
               <br />
-              <span className="text-w-blue">Your Business Forward</span>.
-            </h1>
-            <p className="text-sm md:text-base text-w-muted leading-relaxed max-w-lg mb-8">
-              I design, build, and scale digital products that help businesses automate operations, improve customer experience, and unlock new revenue. Fifteen years of shipping production software.
-            </p>
-            <div className="flex flex-wrap gap-3">
+              <span className="text-w-blue">Your Business Forward</span>
+            </motion.h1>
+            <motion.p
+              variants={item}
+              className="text-sm md:text-base text-w-muted leading-relaxed max-w-xl mb-8"
+            >
+              I build digital products that automate operations, improve customer experience, and unlock new revenue. Fifteen years of shipping production software.
+            </motion.p>
+            <motion.div variants={item} className="flex flex-wrap gap-3">
               <Link
                 href="#outcomes"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-bg bg-w-text transition-all duration-200 hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50"
+                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-w-bg bg-w-text transition-all duration-200 hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50"
                 style={{ borderRadius: "4px" }}
               >
                 See What I Build <ArrowUpRight size={14} />
               </Link>
               <Link
                 href="#pricing"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-w-text border border-w-border transition-all duration-200 hover:border-w-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50"
+                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-w-text border border-w-border transition-all duration-200 hover:border-w-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50"
                 style={{ borderRadius: "4px" }}
               >
                 View Pricing
               </Link>
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
             initial={!prefersReducedMotion ? { opacity: 0, scale: 0.92 } : undefined}
             animate={!prefersReducedMotion && isInView ? { opacity: 1, scale: 1 } : undefined}
-            transition={{ delay: 0.2, duration: 0.9, ease: easeOut }}
+            transition={{ delay: 0.3, duration: 0.9, ease: easeOut }}
           >
             <HeroDiagram />
           </motion.div>
@@ -284,11 +301,14 @@ function ProcessSection() {
           className="mb-12 max-w-2xl"
         >
           <SectionLabel>How I Work</SectionLabel>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
-            A process designed for
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text mb-4">
+            A process that turns your idea
             <br />
-            <span className="text-w-blue">predictability, not heroics</span>.
+            <span className="text-w-blue">into working software, step by step</span>.
           </h2>
+          <p className="text-sm text-w-muted leading-relaxed max-w-lg">
+            Every project follows the same backbone. The timeline flexes. The quality bar does not.
+          </p>
         </motion.div>
 
         <ScaleIn>

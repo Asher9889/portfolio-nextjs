@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface Node {
   id: string;
@@ -31,10 +31,11 @@ const connections: [string, string][] = [
 ];
 
 function AnimatedLine({
-  x1, y1, x2, y2, progress, isActive,
+  x1, y1, x2, y2, progress, isActive, prefersReducedMotion,
 }: {
   x1: number; y1: number; x2: number; y2: number;
   progress: number; isActive: boolean;
+  prefersReducedMotion: boolean | null;
 }) {
   const cx1 = x1 + (x2 - x1) * 0.4;
   const cy1 = y1;
@@ -52,12 +53,14 @@ function AnimatedLine({
         strokeWidth="1.5"
         opacity={isActive ? 0.7 : 0.2}
         strokeDasharray="6 4"
-        strokeDashoffset={-progress * 100}
+        strokeDashoffset={!prefersReducedMotion ? -progress * 100 : 0}
         style={{ transition: "opacity 0.4s" }}
       />
-      <circle r="2" fill="var(--color-w-blue)" opacity={isActive ? 0.8 : 0.3}>
-        <animateMotion dur="3s" repeatCount="indefinite" path={d} />
-      </circle>
+      {!prefersReducedMotion && (
+        <circle r="2" fill="var(--color-w-blue)" opacity={isActive ? 0.8 : 0.3}>
+          <animateMotion dur="3s" repeatCount="indefinite" path={d} />
+        </circle>
+      )}
     </g>
   );
 }
@@ -132,11 +135,13 @@ export default function HeroDiagram() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [activeNode, setActiveNode] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
     const t = setInterval(() => setProgress((p) => (p + 0.5) % 100), 80);
     return () => clearInterval(t);
-  }, []);
+  }, [prefersReducedMotion]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY });
@@ -158,9 +163,9 @@ export default function HeroDiagram() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { setActiveNode(null); setMousePos({ x: 0, y: 0 }); }}
-      className="relative w-full aspect-[4/3] max-h-[420px]"
+      className="relative w-full aspect-[4/3] max-h-[420px] min-h-[200px]"
     >
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true">
         {connections.map(([from, to], i) => {
           const a = nodeMap.get(from);
           const b = nodeMap.get(to);
@@ -173,6 +178,7 @@ export default function HeroDiagram() {
               x2={b.x / 100 * 100} y2={b.y / 100 * 100}
               progress={progress + i * 20}
               isActive={!!active}
+              prefersReducedMotion={prefersReducedMotion}
             />
           );
         })}
@@ -191,7 +197,7 @@ export default function HeroDiagram() {
         />
       ))}
 
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center gap-2 text-[10px] text-w-muted/50 font-inter">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 items-center gap-2 text-[10px] text-w-muted/50 font-inter hidden md:flex" aria-hidden="true">
         <span className="w-2 h-[1px] bg-w-border" />
         hover to trace data flow
         <span className="w-2 h-[1px] bg-w-border" />
