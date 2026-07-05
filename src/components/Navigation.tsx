@@ -55,7 +55,7 @@ export default function Navigation() {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 px-8 py-6 flex items-center justify-between mix-blend-difference text-white md:mix-blend-normal md:text-foreground transition-transform duration-500"
+        className=" fixed top-0 left-0 right-0 z-50 px-8 py-6 flex items-center justify-between mix-blend-difference text-white md:mix-blend-normal md:text-foreground transition-transform duration-500"
         animate={{ y: prefersReducedMotion ? 0 : visible ? 0 : -120 }}
         initial={{ y: prefersReducedMotion ? 0 : -120 }}
         transition={{ duration: 0.45, ease: easeOutExpo }}

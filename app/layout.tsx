@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   description: myInfo.description,
 };
 
-export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
@@ -74,9 +74,9 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="min-h-full flex flex-col">
-          <Navigation />
+        <Navigation />
         {children}
-        </body>
+      </body>
     </html>
   );
 }

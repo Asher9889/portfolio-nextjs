@@ -1,206 +1,67 @@
-"use client";
-
-import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-
-interface Node {
-  id: string;
-  label: string;
-  x: number;
-  y: number;
-}
-
-const nodes: Node[] = [
-  { id: "website", label: "Website", x: 15, y: 22 },
-  { id: "api", label: "API", x: 50, y: 18 },
-  { id: "database", label: "Database", x: 82, y: 22 },
-  { id: "analytics", label: "Analytics", x: 15, y: 72 },
-  { id: "ai", label: "AI", x: 50, y: 76 },
-  { id: "mobile", label: "Mobile App", x: 82, y: 72 },
-];
-
-const connections: [string, string][] = [
-  ["website", "api"],
-  ["api", "database"],
-  ["website", "analytics"],
-  ["api", "ai"],
-  ["database", "mobile"],
-  ["api", "mobile"],
-  ["ai", "mobile"],
-  ["analytics", "ai"],
-];
-
-function AnimatedLine({
-  x1, y1, x2, y2, progress, isActive, prefersReducedMotion,
-}: {
-  x1: number; y1: number; x2: number; y2: number;
-  progress: number; isActive: boolean;
-  prefersReducedMotion: boolean | null;
-}) {
-  const cx1 = x1 + (x2 - x1) * 0.4;
-  const cy1 = y1;
-  const cx2 = x2 - (x2 - x1) * 0.4;
-  const cy2 = y2;
-  const d = `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`;
-
-  return (
-    <g>
-      <path d={d} fill="none" stroke="var(--color-w-border)" strokeWidth="1" opacity="0.3" />
-      <path
-        d={d}
-        fill="none"
-        stroke="var(--color-w-blue)"
-        strokeWidth="1.5"
-        opacity={isActive ? 0.7 : 0.2}
-        strokeDasharray="6 4"
-        strokeDashoffset={!prefersReducedMotion ? -progress * 100 : 0}
-        style={{ transition: "opacity 0.4s" }}
-      />
-      {!prefersReducedMotion && (
-        <circle r="2" fill="var(--color-w-blue)" opacity={isActive ? 0.8 : 0.3}>
-          <animateMotion dur="3s" repeatCount="indefinite" path={d} />
-        </circle>
-      )}
-    </g>
-  );
-}
-
-function FloatingCard({
-  node, mouseX, mouseY, containerRef, isActive, onHover, onLeave,
-}: {
-  node: Node;
-  mouseX: number; mouseY: number;
-  containerRef: React.RefObject<HTMLDivElement | null>;
-  isActive: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [size, setSize] = useState({ w: 100, h: 36 });
-
-  useEffect(() => {
-    if (!cardRef.current) return;
-    const obs = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (entry) {
-        setSize({ w: entry.contentRect.width, h: entry.contentRect.height });
-      }
-    });
-    obs.observe(cardRef.current);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (mouseX - cx) / rect.width;
-    const dy = (mouseY - cy) / rect.height;
-    const strength = 8;
-    const xFactor = (node.x - 50) / 50;
-    const yFactor = (node.y - 50) / 50;
-    setPos({ x: dx * strength * xFactor, y: dy * strength * yFactor });
-  }, [mouseX, mouseY, containerRef, node.x, node.y]);
-
-  const left = `calc(${node.x}% - ${size.w / 2}px)`;
-  const top = `calc(${node.y}% - ${size.h / 2}px)`;
-
-  return (
-    <motion.div
-      ref={cardRef}
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      animate={{ x: pos.x, y: pos.y }}
-      transition={{ type: "spring", stiffness: 80, damping: 15, mass: 0.5 }}
-      className={`absolute z-10 flex items-center gap-2 px-3 py-2 bg-w-bg border transition-all duration-300 cursor-default select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-w-blue/50`}
-      style={{
-        left, top,
-        borderRadius: "6px",
-        borderColor: isActive ? "var(--color-w-blue)" : "var(--color-w-border)",
-        boxShadow: isActive ? "0 0 0 1px rgba(20,110,245,0.15), 0 4px 12px rgba(0,0,0,0.04)" : "0 2px 6px rgba(0,0,0,0.03)",
-      }}
-    >
-      <span className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${isActive ? "bg-w-blue" : "bg-w-border"}`} />
-      <span className={`text-xs font-medium font-inter transition-colors duration-300 ${isActive ? "text-w-text" : "text-w-muted"}`}>
-        {node.label}
-      </span>
-    </motion.div>
-  );
-}
-
 export default function HeroDiagram() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [activeNode, setActiveNode] = useState<string | null>(null);
-  const [progress, setProgress] = useState(0);
-  const prefersReducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    const t = setInterval(() => setProgress((p) => (p + 0.5) % 100), 80);
-    return () => clearInterval(t);
-  }, [prefersReducedMotion]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    setMousePos({ x: e.clientX, y: e.clientY });
-  }, []);
-
-  const connectedNodes = (id: string): string[] => {
-    const connected: string[] = [];
-    for (const [a, b] of connections) {
-      if (a === id) connected.push(b);
-      if (b === id) connected.push(a);
-    }
-    return connected;
-  };
-
-  const nodeMap = new Map(nodes.map((n) => [n.id, n]));
-
   return (
-    <div
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => { setActiveNode(null); setMousePos({ x: 0, y: 0 }); }}
-      className="relative w-full aspect-[4/3] max-h-[420px] min-h-[200px]"
-    >
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true">
-        {connections.map(([from, to], i) => {
-          const a = nodeMap.get(from);
-          const b = nodeMap.get(to);
-          if (!a || !b) return null;
-          const active = activeNode && (connectedNodes(activeNode).includes(from) || connectedNodes(activeNode).includes(to) || activeNode === from || activeNode === to);
-          return (
-            <AnimatedLine
-              key={`${from}-${to}`}
-              x1={a.x / 100 * 100} y1={a.y / 100 * 100}
-              x2={b.x / 100 * 100} y2={b.y / 100 * 100}
-              progress={progress + i * 20}
-              isActive={!!active}
-              prefersReducedMotion={prefersReducedMotion}
-            />
-          );
-        })}
-      </svg>
-
-      {nodes.map((node) => (
-        <FloatingCard
-          key={node.id}
-          node={node}
-          mouseX={mousePos.x}
-          mouseY={mousePos.y}
-          containerRef={containerRef}
-          isActive={!!activeNode && (activeNode === node.id || connectedNodes(activeNode).includes(node.id))}
-          onHover={() => setActiveNode(node.id)}
-          onLeave={() => setActiveNode(null)}
-        />
-      ))}
-
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 items-center gap-2 text-[10px] text-w-muted/50 font-inter hidden md:flex" aria-hidden="true">
-        <span className="w-2 h-[1px] bg-w-border" />
-        hover to trace data flow
-        <span className="w-2 h-[1px] bg-w-border" />
+    <div className="relative w-full aspect-4/3 max-h-105 min-h-50 flex flex-col items-center justify-center gap-2 sm:gap-3 px-2 sm:px-4">
+      <div className="flex items-start gap-1 sm:gap-2 w-full max-w-120 justify-center">
+        <div className="flex flex-col gap-1.5 items-center flex-1 min-w-0">
+          <span className="text-[7px] sm:text-[8px] font-mono uppercase tracking-widest text-w-muted/40 select-none mb-0.5">Your Problem</span>
+          <div className="w-full px-2 sm:px-2.5 py-1.5 rounded-lg bg-w-bg/80 backdrop-blur-sm border border-w-border/60 hover:border-w-blue transition-colors duration-300 cursor-default select-none">
+            <span className="text-[8px] sm:text-[9px] font-medium text-w-muted/80 block text-center leading-snug">Users expect a flawless experience</span>
+          </div>
+          <div className="w-full px-2 sm:px-2.5 py-1.5 rounded-lg bg-w-bg/80 backdrop-blur-sm border border-w-border/60 hover:border-w-blue transition-colors duration-300 cursor-default select-none">
+            <span className="text-[8px] sm:text-[9px] font-medium text-w-muted/80 block text-center leading-snug">Your data is growing faster than your systems</span>
+          </div>
+          <div className="w-full px-2 sm:px-2.5 py-1.5 rounded-lg bg-w-bg/80 backdrop-blur-sm border border-w-border/60 hover:border-w-blue transition-colors duration-300 cursor-default select-none">
+            <span className="text-[8px] sm:text-[9px] font-medium text-w-muted/80 block text-center leading-snug">Market demands faster delivery</span>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center pt-8 gap-1">
+          <span className="text-w-muted/20 text-xs select-none">→</span>
+          <span className="text-w-muted/20 text-xs select-none">→</span>
+          <span className="text-w-muted/20 text-xs select-none">→</span>
+        </div>
+        <div className="flex flex-col gap-1.5 items-center flex-1 min-w-0">
+          <span className="text-[7px] sm:text-[8px] font-mono uppercase tracking-widest text-w-blue/50 select-none mb-0.5">Our Expertise</span>
+          <div className="w-full px-2 sm:px-2.5 py-1.5 rounded-lg bg-w-bg/80 backdrop-blur-sm border border-w-blue/25 hover:border-w-blue transition-colors duration-300 cursor-default select-none">
+            <div className="w-2.5 h-2.5 rounded bg-w-blue/20 flex items-center justify-center mx-auto mb-0.5">
+              <div className="w-1 h-1 rounded-sm bg-w-blue" />
+            </div>
+            <span className="text-[8px] sm:text-[9px] font-semibold text-w-text block text-center leading-snug">Full-stack apps built to scale</span>
+          </div>
+          <div className="w-full px-2 sm:px-2.5 py-1.5 rounded-lg bg-w-bg/80 backdrop-blur-sm border border-w-blue/25 hover:border-w-blue transition-colors duration-300 cursor-default select-none">
+            <div className="w-2.5 h-2.5 rounded bg-w-blue/20 flex items-center justify-center mx-auto mb-0.5">
+              <div className="w-1 h-1 rounded-sm bg-w-blue" />
+            </div>
+            <span className="text-[8px] sm:text-[9px] font-semibold text-w-text block text-center leading-snug">Systems engineered for speed</span>
+          </div>
+          <div className="w-full px-2 sm:px-2.5 py-1.5 rounded-lg bg-w-bg/80 backdrop-blur-sm border border-w-blue/25 hover:border-w-blue transition-colors duration-300 cursor-default select-none">
+            <div className="w-2.5 h-2.5 rounded bg-w-blue/20 flex items-center justify-center mx-auto mb-0.5">
+              <div className="w-1 h-1 rounded-sm bg-w-blue" />
+            </div>
+            <span className="text-[8px] sm:text-[9px] font-semibold text-w-text block text-center leading-snug">Product-minded engineering end to end</span>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center pt-8 gap-1">
+          <span className="text-w-muted/20 text-xs select-none">→</span>
+          <span className="text-w-muted/20 text-xs select-none">→</span>
+          <span className="text-w-muted/20 text-xs select-none">→</span>
+        </div>
+        <div className="flex flex-col gap-1.5 items-center flex-1 min-w-0">
+          <span className="text-[7px] sm:text-[8px] font-mono uppercase tracking-widest text-w-muted/40 select-none mb-0.5">Your Result</span>
+          <div className="w-full px-2 sm:px-2.5 py-1.5 rounded-lg bg-w-bg/80 backdrop-blur-sm border border-w-border/60 hover:border-w-blue transition-colors duration-300 cursor-default select-none">
+            <span className="text-[8px] sm:text-[9px] font-medium text-w-text block text-center leading-snug">A fast, scalable application</span>
+          </div>
+          <div className="w-full px-2 sm:px-2.5 py-1.5 rounded-lg bg-w-bg/80 backdrop-blur-sm border border-w-border/60 hover:border-w-blue transition-colors duration-300 cursor-default select-none">
+            <span className="text-[8px] sm:text-[9px] font-medium text-w-text block text-center leading-snug">Users who love the experience</span>
+          </div>
+          <div className="w-full px-2 sm:px-2.5 py-1.5 rounded-lg bg-w-bg/80 backdrop-blur-sm border border-w-border/60 hover:border-w-blue transition-colors duration-300 cursor-default select-none">
+            <span className="text-[8px] sm:text-[9px] font-medium text-w-text block text-center leading-snug">Sustainable business growth</span>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center gap-2 text-[10px] text-w-muted/40 font-inter select-none" aria-hidden="true">
+        <span className="w-3 h-px bg-w-border/50" />
+        we find the problem, then we solve it
+        <span className="w-3 h-px bg-w-border/50" />
       </div>
     </div>
   );

@@ -75,7 +75,7 @@ function HeroSection() {
 
   return (
     <section ref={ref} className="bg-w-bg pt-28 pb-16 md:pt-36 md:pb-20">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div
             variants={!prefersReducedMotion ? container : undefined}
@@ -84,18 +84,49 @@ function HeroSection() {
           >
             <motion.h1
               variants={item}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-inter font-bold tracking-tighter leading-[0.92] text-w-text mb-6"
+              className="flex flex-col"
             >
-              Software That Moves
-              <br />
-              <span className="text-w-blue">Your Business Forward</span>
+              <span className="text-[0.6875rem] font-medium tracking-[0.15em] uppercase text-w-muted/50 font-mono mb-2">
+                What We Deliver
+              </span>
+              <span className="text-[clamp(1.5rem,3.5vw,2.5rem)] font-semibold tracking-tighter leading-[1.1] text-w-text/55">
+                Custom Software Built Around
+              </span>
+              <span className="text-[clamp(3rem,8vw,6rem)] font-black tracking-tighter leading-[0.85] text-w-blue relative inline-block">
+                <span className="absolute inset-[-0.15em_-0.08em_-0.05em] rounded-[0.15em] -z-10" />
+                Your Business.
+              </span>
             </motion.h1>
-            <motion.p
+            <motion.div
               variants={item}
-              className="text-sm md:text-base text-w-muted leading-relaxed max-w-xl mb-8"
+              className="flex flex-col gap-2.5 mb-8"
             >
-              I build digital products that automate operations, improve customer experience, and unlock new revenue. Fifteen years of shipping production software.
-            </motion.p>
+              <div className="flex items-center gap-3 text-[0.9375rem] leading-[1.4] text-w-muted">
+                <span className="font-mono text-[0.6875rem] font-semibold tracking-wider text-w-muted/20 w-6 text-right shrink-0">01</span>
+                <span className="font-medium text-w-text">Custom Software</span>
+                <span className="text-w-muted/40 text-[0.8125rem]">Tailored systems for your workflow</span>
+              </div>
+              <div className="flex items-center gap-3 text-[0.9375rem] leading-[1.4] text-w-muted">
+                <span className="font-mono text-[0.6875rem] font-semibold tracking-wider text-w-muted/20 w-6 text-right shrink-0">02</span>
+                <span className="font-medium text-w-text">Mobile Apps</span>
+                <span className="text-w-muted/40 text-[0.8125rem]">iOS & Android, native performance</span>
+              </div>
+              <div className="flex items-center gap-3 text-[0.9375rem] leading-[1.4] text-w-muted">
+                <span className="font-mono text-[0.6875rem] font-semibold tracking-wider text-w-muted/20 w-6 text-right shrink-0">03</span>
+                <span className="font-medium text-w-text">Business Websites</span>
+                <span className="text-w-muted/40 text-[0.8125rem]">Fast, memorable, conversion-ready</span>
+              </div>
+              <div className="flex items-center gap-3 text-[0.9375rem] leading-[1.4] text-w-muted">
+                <span className="font-mono text-[0.6875rem] font-semibold tracking-wider text-w-muted/20 w-6 text-right shrink-0">04</span>
+                <span className="font-medium text-w-text">AI Solutions</span>
+                <span className="text-w-muted/40 text-[0.8125rem]">Automation, agents, intelligent features</span>
+              </div>
+              <div className="flex items-center gap-3 text-[0.9375rem] leading-[1.4] text-w-muted">
+                <span className="font-mono text-[0.6875rem] font-semibold tracking-wider text-w-muted/20 w-6 text-right shrink-0">05</span>
+                <span className="font-medium text-w-text">Ongoing Support</span>
+                <span className="text-w-muted/40 text-[0.8125rem]">Monitoring, maintenance, scaling</span>
+              </div>
+            </motion.div>
             <motion.div variants={item} className="flex flex-wrap gap-3">
               <Link
                 href="#outcomes"
@@ -136,7 +167,7 @@ function OutcomesSection() {
 
   return (
     <section id="outcomes" ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <FadeIn className="mb-16 max-w-2xl">
           <SectionLabel>What I Solve</SectionLabel>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
@@ -173,7 +204,7 @@ function OutcomesSection() {
                       <Check size={10} className="text-w-blue/60 shrink-0" />
                       <span className="text-xs font-inter font-semibold text-w-text">{item.label}</span>
                     </div>
-                    <p className="text-[11px] text-w-muted leading-relaxed pl-[18px]">{item.desc}</p>
+                    <p className="text-[11px] text-w-muted leading-relaxed pl-4.5">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -195,7 +226,7 @@ function CaseStudiesSection() {
 
   return (
     <section ref={ref} className="py-20 md:py-28 bg-w-smoke border-t border-w-border">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <FadeIn className="mb-16 max-w-2xl">
           <SectionLabel>Recent Work</SectionLabel>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
@@ -265,7 +296,7 @@ function CaseStudiesSection() {
                           </div>
                           <div className="flex flex-wrap gap-2">
                             {cs.metrics.map((m) => (
-                              <span key={m} className="text-[11px] font-inter font-medium text-w-blue bg-w-blue/[0.04] px-2.5 py-1 border border-w-blue/20" style={{ borderRadius: "4px" }}>
+                              <span key={m} className="text-[11px] font-inter font-medium text-w-blue bg-w-blue/4 px-2.5 py-1 border border-w-blue/20" style={{ borderRadius: "4px" }}>
                                 {m}
                               </span>
                             ))}
@@ -293,7 +324,7 @@ function ProcessSection() {
 
   return (
     <section ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <motion.div
           initial={!prefersReducedMotion ? { opacity: 0, y: 24 } : undefined}
           animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
@@ -328,7 +359,7 @@ function ComparisonSection() {
 
   return (
     <section ref={ref} className="py-20 md:py-28 bg-w-smoke border-t border-w-border">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <FadeIn className="mb-12 max-w-2xl">
           <SectionLabel>Why Choose Me</SectionLabel>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
@@ -338,7 +369,7 @@ function ComparisonSection() {
           </h2>
         </FadeIn>
 
-          <div className="grid md:grid-cols-2 gap-0 border border-w-border overflow-hidden" style={{ borderRadius: "8px" }}>
+        <div className="grid md:grid-cols-2 gap-0 border border-w-border overflow-hidden" style={{ borderRadius: "8px" }}>
           {/* Typical header */}
           <div className="p-5 bg-w-bg border-r border-b border-w-border">
             <div className="flex items-center gap-2">
@@ -392,7 +423,7 @@ function ArchitectureSection() {
 
   return (
     <section ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <motion.div
           initial={!prefersReducedMotion ? { opacity: 0, y: 24 } : undefined}
           animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
@@ -428,7 +459,7 @@ function PricingSection() {
 
   return (
     <section id="pricing" ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <FadeIn className="mb-12 max-w-2xl">
           <SectionLabel>Investment</SectionLabel>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
@@ -487,7 +518,7 @@ function PricingSection() {
 function TechSection() {
   return (
     <section className="py-20 md:py-28 bg-w-smoke border-t border-w-border">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <div className="grid md:grid-cols-2 gap-10 md:gap-16">
           <FadeIn>
             <SectionLabel>Built With</SectionLabel>
@@ -518,7 +549,7 @@ function TechSection() {
             <ul className="space-y-3">
               {enterprisePractices.map((p) => (
                 <li key={p} className="flex items-center gap-3 text-sm text-w-muted">
-                  <span className="w-5 h-5 flex items-center justify-center border border-w-blue/30 bg-w-blue/[0.03]" style={{ borderRadius: "4px" }}>
+                  <span className="w-5 h-5 flex items-center justify-center border border-w-blue/30 bg-w-blue/3" style={{ borderRadius: "4px" }}>
                     <Check size={10} className="text-w-blue/60" />
                   </span>
                   {p}
@@ -542,7 +573,7 @@ function FAQSection() {
 
   return (
     <section ref={ref} className="py-20 md:py-28 bg-w-bg border-t border-w-border">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <FadeIn className="mb-12 max-w-2xl">
           <SectionLabel>Questions You Might Have</SectionLabel>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-inter font-bold tracking-tight leading-[1.05] text-w-text">
@@ -601,7 +632,7 @@ function CTASection() {
 
   return (
     <section ref={ref} className="py-24 md:py-32 bg-w-text border-t border-w-border">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-300 px-6">
         <motion.div
           initial={!prefersReducedMotion ? { opacity: 0, y: 24 } : undefined}
           animate={!prefersReducedMotion && isInView ? { opacity: 1, y: 0 } : undefined}
