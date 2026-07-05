@@ -1,9 +1,8 @@
-import Hero from "@/features/home/components/Hero";
-import ProjectShowcase from "@/features/home/components/ProjectShowcase";
-import AboutMe from "@/features/home/components/AboutMe";
-import Contact from "@/features/home/components/Contact";
+import Hero from "@/features/home/components/hero";
+import ProjectShowcase from "@/features/home/components/projects";
+import AboutMe from "@/features/home/components/about";
+import Contact from "@/features/home/components/contact";
 import Footer from "@/features/home/components/Footer";
-import Navigation from "@/components/Navigation";
 
 export default function HomePage() {
   return (

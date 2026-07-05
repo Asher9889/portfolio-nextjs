@@ -1,5 +1,3 @@
-"use client";
-
 export default function Footer() {
   return (
     <footer className="border-t border-foreground/5 bg-background py-12">
@@ -25,9 +23,7 @@ export default function Footer() {
             <a
               key={item}
               href={`/#${item.toLowerCase()}`}
-              className="text-sm text-foreground/40 transition-colors duration-300"
-              onMouseEnter={(e) => { e.currentTarget.style.color = "#E8B84B"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = ""; }}
+              className="text-sm text-foreground/40 transition-colors duration-300 hover:text-[#E8B84B]"
             >
               {item}
             </a>
