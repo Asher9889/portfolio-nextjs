@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Menu, X } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import clsx from "clsx";
 import ShinyText from './ShinyText';
 import BookCallDialog from "./BookCallDialog";
+import MobileNav from "./MobileNav";
 import { useNavbarVisibility } from "@/hooks/useNavbarVisibility";
 import { headerMenu } from "@/constants/home.constant";
 
@@ -17,6 +18,7 @@ const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 export default function Navigation() {
   const prefersReducedMotion = useReducedMotion();
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>("light");
   const visible = useNavbarVisibility();
 
@@ -158,8 +160,34 @@ export default function Navigation() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3" />
+        <div className="flex items-center gap-2">
+          <motion.button
+            type="button"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-full transition-colors cursor-pointer"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            whileHover={prefersReducedMotion ? {} : { scale: 1.1 }}
+            whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
+            transition={{ duration: 0.3, ease: easeOutExpo }}
+          >
+            <motion.span
+              animate={prefersReducedMotion ? {} : { rotate: mobileMenuOpen ? 90 : 0 }}
+              transition={{ duration: 0.35, ease: easeOutExpo }}
+              className="flex"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </motion.span>
+          </motion.button>
+        </div>
       </motion.nav>
+
+      <MobileNav
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        onBookCall={() => setBookingOpen(true)}
+      />
 
       <BookCallDialog open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </>

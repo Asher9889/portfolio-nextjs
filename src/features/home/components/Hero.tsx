@@ -25,7 +25,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 px-4 overflow-hidden">
+    <section className="relative min-h-[75vh] lg:min-h-screen flex flex-col items-center justify-center  md:pt-24 pb-12 px-4 overflow-hidden">
       <motion.div
         variants={!prefersReducedMotion ? containerVariants : undefined}
         initial={!prefersReducedMotion ? "hidden" : undefined}

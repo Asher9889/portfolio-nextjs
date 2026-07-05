@@ -13,7 +13,7 @@ export function useNavbarVisibility() {
 
             const delta = current - previousScroll.current;
 
-            if (Math.abs(delta) < 40) return; // less than 40px change, ignore
+            if (Math.abs(delta) < 20) return; // less than 40px change, ignore
 
             // Always show near the top
             if (current < threshold) {
