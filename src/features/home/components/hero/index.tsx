@@ -77,7 +77,7 @@ export default function Hero() {
         <div className="flex flex-col items-end gap-2 text-right">
           <Layers size={24} className="stroke-[1.5]" style={{ color: "#E8B84B" }} />
           <div className="text-sm md:text-base font-bold text-foreground uppercase tracking-wide">
-            FULL STACK DEV,
+            FULL STACK,
             <br />
             <span className="text-foreground/40 font-medium">&amp; Mobile Developer</span>
           </div>
